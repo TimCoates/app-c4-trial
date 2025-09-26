@@ -22,12 +22,12 @@ dynamic view oauth {
   description 'Sequence of the Authorization Code Flow for OAuth2'
 
   // 1
-  nhsappservice.androidapp -> nhsappservice.androidapp 'Generate PKCE pair' {
+  nhsappservice.androidapp.androidapplogic -> nhsappservice.androidapp.androidapplogic 'Generate PKCE pair' {
     description 'Generate a code verifier and code challenge'
   }
 
   // 2
-  nhsappservice.androidapp -> nhsappservice.androidapp.androidwebview 'Tell WebView to navigate to NHS login' {
+  nhsappservice.androidapp.androidapplogic -> nhsappservice.androidapp.androidwebview 'Tell WebView to navigate to NHS login' {
     description 'Tell the WebView to open the NHS login page'
   }
   
@@ -57,12 +57,12 @@ dynamic view oauth {
   }
 
   // 8
-  nhsappservice.androidapp -> nhsappservice.androidapp.androidwebview 'Response intercepted' {
+  nhsappservice.androidapp.androidwebview -> nhsappservice.androidapp.androidapplogic 'Response intercepted' {
     description 'Native App intercepts the Response and extracts the code parameter'
   }
 
   // 9
-  nhsappservice.androidapp -> nhsappservice.backend.monolith.sessionapi 'POST /v1/session' {
+  nhsappservice.androidapp.androidapplogic -> nhsappservice.backend.monolith.sessionapi 'POST /v1/session' {
     description 'POST /v1/session with authorization code, redirect_uri, client_id, code_verifier'
   }
 

@@ -36,6 +36,13 @@ model {
           shape mobile
         }
 
+        androidapplogic = component 'App Logic' {
+          description 'Runs the native app functionality.'
+          style {
+            icon tech:kotlin
+          }
+        }
+
         androidwebview = component 'Web View' {
           description 'Renders web content within the app.'
           style {
