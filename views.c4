@@ -6,7 +6,7 @@ views 'NHS App' {
     include nhsappservice, user, login
   }
 
-  view {
+  view Landscape02 {
     title '01 Landscape / 02 Landscape'
     include *
   }
@@ -113,86 +113,86 @@ dynamic view oauth {
 
 }
 
-  view of nhsappservice.NativeApp {
+  view NativeOverview of nhsappservice.NativeApp {
     title '02 NHS App / 01 Native App / 00 Overview'
     include *
   }
 
-  view of nhsappservice.NativeApp.iosapp {
+  view iOSOverview of nhsappservice.NativeApp.iosapp {
     title '02 NHS App / 01 Native App / 01 iOS App'
     include *
   }
 
-  view of nhsappservice.NativeApp.androidapp {
+  view AndroidOverview of nhsappservice.NativeApp.androidapp {
     title '02 NHS App / 01 Native App / 02 Android App'
     include *
   }
 
-  view of nhsappservice.webApp {
+  view WebApp of nhsappservice.webApp {
     title '02 NHS App / 04 Web App'
     include *
   }
 
-  view of nhsappservice.backend {
+  view Backend of nhsappservice.backend {
     title '03 Backend / 01 Backend'
     include *
   }
 
-  view of nhsappservice.backend.monolith {
+  view Monolith of nhsappservice.backend.monolith {
     title '03 Backend / 02 Monolith'
     description 'Shows how both the Native App and the Web App communicate to the original monolith backend service.'
     include *
   }
 
-  view of nhsappservice.backend.nandm {
+  view NAndM of nhsappservice.backend.nandm {
     title '03 Backend / 03 Notifications and Messaging'
     include *
   }
 
-  view of pds {
+  view PDS of pds {
     title '04 External Systems / 01 PDS'
     include *
   }
 
-  view of ordapi {
+  view ORD of ordapi {
     title '04 External Systems / 02 ORD API'
     include *
   }
 
-  view of GPSystems {
+  view GPSystems of GPSystems {
     title '04 External Systems / 01 GP Systems / 00 Overview'
     include *
   }
 
-  view of GPSystems.optum {
+  view Optum of GPSystems.optum {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 01 OPTUM'
     include *
   }
-  view of GPSystems.optum.optumIM1PFS {
+  view OptumPFS of GPSystems.optum.optumIM1PFS {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 02 IM1 PFS API Features'
     include *
   }
-  view of GPSystems.optum.optumIM1PFS.emisim1pfsapptmanagement {
+  view OptumPFSAppointments of GPSystems.optum.optumIM1PFS.emisim1pfsapptmanagement {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 03 IM1 PFS API Appointments'
     include *
   }
 
-  view of GPSystems.optum.optumIM1PFS.emisim1pfspatientcomms {
+  view OptumPFSCommunications of GPSystems.optum.optumIM1PFS.emisim1pfspatientcomms {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 04 IM1 PFS API Patient Comms'
     include *
   }
 
-  view of GPSystems.optum.optumIM1PFS.emisim1pfsgetrecord {
+  view OptumPFSRecords of GPSystems.optum.optumIM1PFS.emisim1pfsgetrecord {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 05 IM1 PFS API Get Record'
     include *
   }
 
-  view of GPSystems.optum.optumIM1PFS.emisim1pfsprescriptions {
+  view OptumPFSPrescriptions of GPSystems.optum.optumIM1PFS.emisim1pfsprescriptions {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 06 IM1 PFS API Prescriptions'
     include *
   }
 
-  view of GPSystems.optum.optumIM1PFS.emisim1pfsusersessions {
+  view OptumPFSUserSessions of GPSystems.optum.optumIM1PFS.emisim1pfsusersessions {
     title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 07 IM1 PFS API User and Session Management'
     include *
   }

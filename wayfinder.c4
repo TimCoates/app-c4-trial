@@ -1,6 +1,7 @@
 
 // Here we define the details of Wayfinder a bit more
 model {
+
     // wayfinder is defined in model.c4
     extend wayfinder {
 
