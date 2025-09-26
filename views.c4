@@ -82,7 +82,27 @@ dynamic view oauth {
   }
 
   // 13
-  nhsappservice.backend.monolith.sessionapi -> nhsappservice.androidapp 'Tokens' {
+  nhsappservice.backend.monolith.sessionapi -> login 'Get userinfo: GET /userinfo' {
+    description 'Request userinfo about the user, using access token'
+  }
+
+  // 14
+  login -> login 'Validate access token' {
+    description 'Validate the access token'
+  }
+
+  // 15
+  login -> nhsappservice.backend.monolith.sessionapi 'Userinfo' {
+    description 'Userinfo response'
+  }
+
+  // 16
+  nhsappservice.backend.monolith.sessionapi -> nhsappservice.backend.monolith.userinfodevice 'Store userinfo and device info' {
+    description 'Store userinfo and device info in the database'
+  }
+
+  // 13
+  nhsappservice.backend.monolith.sessionapi -> nhsappservice.androidapp.androidapplogic 'Info returned to App with Cookies' {
     description 'ID Token, Access Token, Refresh Token'
   }
 
