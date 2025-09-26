@@ -1,6 +1,6 @@
 
 views {
-  view index {
+  view appindex {
     title '01 Landscape / 01 Index'
     description 'An initial very high level diagram, showing how the User uses the NHS App.'
     include nhsappservice, user, login
