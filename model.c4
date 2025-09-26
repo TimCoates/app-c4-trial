@@ -1,0 +1,512 @@
+specification {
+  element actor
+  element system
+  element container
+  element component
+}
+
+model {
+
+  user = actor 'User' {
+    description 'A user of the NHS App.'
+    style {
+      shape person
+    }
+  }
+
+  // NHS App System
+  nhsappservice = system 'NHS App Service' {
+    description 'Allows users to access a range of NHS services.'
+    link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
+
+    webApp = component 'Web version of the NHS App' {
+      description 'NHS App as viewed in a web browser.'
+      technology 'Vue.js, HTML, CSS'
+      icon tech:vue
+    }  
+
+    NativeApp = container 'Native App' {
+      link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/97e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
+
+      androidapp = container 'Native Android App' {
+        description 'Native Android App that allows users to access a range of NHS services.'
+        link https://github.com/NHSDigital/nhsapp-android 'Code repository'
+        style {
+          icon tech:kotlin
+          shape mobile
+        }
+
+        androidwebview = component 'Web View' {
+          description 'Renders web content within the app.'
+          style {
+            shape browser
+            color muted
+          }
+        }
+      }
+
+      iosapp = container 'Native iOS App' {
+        description 'Native Android App that allows users to access a range of NHS services.'
+        link https://github.com/NHSDigital/nhsapp-ios 'Code repository'
+        style {
+          icon tech:swift
+          shape mobile
+        }
+
+        ioswebview = component 'Web View' {
+          description 'Renders web content within the app.'
+          style {
+            shape browser
+            color muted
+          }
+        }
+      }
+    }
+
+    backend = component 'Backend' {
+      description 'Handles API requests from the Native App and communicates with external services.'
+
+      monolith = component 'App backend monolith' {
+        description 'Handles App backend calls.'
+        link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker 'Code repository'
+        style {
+          icon tech:csharp
+          opacity 10%
+        }
+
+        sjrapi = component 'SJR API' {
+          description 'Handles retrieval of SJR'
+          style {
+            icon tech:csharp
+          }
+        }
+
+        pfsapi = component 'PFS API' {
+          description 'Handles interactions with PFS Services'
+          style {
+            icon tech:csharp
+          }
+        }
+
+        sessionapi = component 'Session API' {
+          description 'Handles session management'
+          style {
+            icon tech:csharp
+          }
+        }
+
+        userinfodevice = component 'Users Info & Devices' {
+          description 'Holds user and device information.'
+          style {
+            icon tech:cosmosdb
+            shape cylinder
+          }
+        }
+
+        sessions = component 'Sessions' {
+          description 'Holds session information.'
+          style {
+            icon tech:cosmosdb
+            shape cylinder
+          }
+        }
+
+        sessionapi -> sessions 'Reads from and writes to database.'
+        sessionapi -> userinfodevice 'Reads from and writes to database.'
+
+      }
+
+      secondarycareadapter = component 'Secondary Care Adapter' {
+        description 'Handles communication with the Secondary Care System.'
+        style {
+          icon tech:csharp
+        }
+      }
+
+      gpconnectadapter = component 'GP Connect Adapter' {
+        description 'Handles communication with the GP Connect services.'
+        style {
+          icon tech:csharp
+        }
+      }
+
+      pdsadapter = component 'PDS Adapter' {
+        description 'Handles communication with the PDS.'
+        link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
+        link https://github.com/NHSDigital/nhsapp-pds-api-adapter 'Code repository'
+
+        style {
+          icon tech:csharp
+        }
+      }
+
+      nandm = component 'Notifications and Messaging' {
+        description 'Handles Patient Messages and Notifications.'
+        style {
+          icon tech:csharp
+        }
+
+        odsservice = component 'ODS Service' {
+          description 'Handles ODS code lookups.'
+          style {
+            icon tech:csharp
+          }
+        }
+
+        database = component 'Database' {
+          description 'Stores Patient Messages and Notifications.'
+          style {
+            icon tech:cosmosdb
+            shape cylinder
+          }
+        }
+      }
+
+      epsadapter = component 'EPS Adapter' {
+        description 'Handles calls to EPS'
+        style {
+          icon tech:csharp
+        }
+      }
+
+    }
+
+    // Relationships
+    webApp -> monolith 'Makes API Calls To'
+    webApp -> pdsadapter 'Makes API Calls To'
+    webApp -> gpconnectadapter 'Makes API Calls To'
+    webApp -> secondarycareadapter 'Makes API Calls To'
+    webApp -> nandm 'Makes API Calls To'
+    webApp -> epsadapter 'Makes API Calls To'
+    webApp ->sessionapi 'Uses for session management' {
+      description 'POST /v1/session and GET /v1/session'
+      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
+      technology 'REST API over HTTPS'
+    }
+    webApp -> pfsapi 'Makes API Calls To' {
+      description 'Makes API Calls To'
+      technology 'REST API over HTTPS'
+    }
+    iosapp -> sessionapi 'Uses for session management' {
+      description 'POST /v1/session and GET /v1/session'
+      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
+      technology 'REST API over HTTPS'
+    }
+    androidapp -> sessionapi 'Uses for session management' {
+      description 'POST /v1/session and GET /v1/session'
+      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
+      technology 'REST API over HTTPS'
+    }
+    androidwebview -> webApp 'Hosts'
+    ioswebview -> webApp 'Hosts'
+
+    // Here are all the links to EMIS using IM1
+    pfsapi -> optum.emisim1pfsappointmentslots 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get available appointment slots'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsappointments 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to manage appointments'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfspatientcommsrecipients 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to communicate with patients'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfspatientcommsmessages 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to communicate with patients'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecorddemographics 'Makes API Call, GET' {
+      description 'GET /demographics\nReturns the known demographic details (including patient identifiers such as NHS or CHI number) of the patient record specified. To change this information please see the /demographicsrequest resource.'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecorddemographicsrequests 'Makes API Calls, GET, POST, DELETE' {
+      description 'GET /demographicsrequest\n POST /demographicsrequest\n DELETE /demographicsrequest\nA demographics request is any update to the patient record’s demographic details that is still awaiting review and acceptance by a user of the clinical system at the practice. Updates to the patient record demographics must always be reviewed before they can be made a permanent modification to the record.'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecorddocuments 'Makes API Calls, GET' {
+      description 'GET /documents/:documentGuid\nRetrieves the document content that has been filed in the patient record. Documents are embedded within HTML mark-up, compressed using GZIP and then encoded in base64.
+A list of available document guids can be retrieved from the /record resource when specifying the item type of “Documents”. The /record resource also contains the document metadata such as the page length, file-size and file extension. 
+EMIS Web is capable of storing multiple document formats, and the API will return the raw data content. Please ensure that it is converted into a viewable format before displaying it to your user.'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecordrecords 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get patient records'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecordprescriptioncourses 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get patient prescription courses'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecordprescriptionpharmacies 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get patient pharmacies'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsgetrecordprescriptionrequests 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get prescription requests'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsusersessionsme 'Makes API Call' {
+      description 'GET /me\nPOST/me\nThe me resource relates directly to the ROSU and their account in the clinical system. This resource has no interaction with any patient record. It also controls linking the subsidiary user to the ROSU in EMIS Web.'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsusersessionspractices 'Makes API Call' {
+      description 'GET /practices\nGET /practices/:nationalPracticeCode/meta\nGET /practices/:nationalPracticeCode/settings\nReturns our recorded details of the specified Practice by their postcode. This call can be used in an attempt to verify if a Practice is an EMIS customer.'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsusersessionssessions 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get...'
+      technology 'IM1'
+    }
+    pfsapi -> optum.emisim1pfsusersessionsusers 'Makes API Call' {
+      description 'Uses optum (EMIS Web) IM1 APIs to get...'
+      technology 'IM1'
+    }
+
+    pfsapi -> tpps1 'Makes API Call' {
+      description 'Uses TPP IM1 APIs to get patient records'
+      technology 'IM1'
+      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/626233388/Example+EMIS+TPP+IM1+API+Responses#ExampleEMIS%2BTPPIM1APIResponses-TPP 'Sample IM1 API responses'
+    }
+    gpconnectadapter -> medicus 'Makes API Call' {
+      description 'Uses GP Connect PFS API to get patient records.'
+      technology 'GP Connect'
+      link https://digital.nhs.uk/developer/api-catalogue/gp-connect-patient-facing-access-record-fhir 'API documentation'
+    }
+
+  }
+
+  // NHSE But external to NHS App Systems
+  login = system 'NHS login' {
+    description 'Handles user authentication and authorization.'
+    link https://nhsd-confluence.digital.nhs.uk/x/HMQLB 'Confluence space'
+    link https://digital.nhs.uk/services/nhs-login 'Public pages'
+    style {
+      icon aws:cognito
+      color: gray
+    }
+  }
+
+  pds = system 'PDS' {
+    description 'The Personal Demographics Service (PDS) is the national electronic database of NHS patient demographic details.'
+    link https://digital.nhs.uk/services/personal-demographics-service 'Public pages'
+    style {
+      icon tech:amazon-web-services
+      color gray
+    }
+
+    component pdsfhirapi 'PDS FHIR API' {
+      description 'The PDS FHIR API provides access to patient demographic details stored in PDS.'
+      link https://digital.nhs.uk/services/personal-demographics-service/pds-fhir-api 'Public pages'
+      style {
+        icon tech:amazon-web-services
+        color gray
+      }
+    }
+
+    component pdshl7v3api 'PDS HL7v3 API' {
+      description 'The PDS HL7v3 API provides access to patient demographic details stored in PDS.'
+      style {
+        color gray
+      }
+    }
+  }
+
+  servicesearch = system 'Service Search' {
+    description 'Provides search functionality for NHS services.'
+    link https://nhsd-confluence.digital.nhs.uk/x/8YfLB 'Confluence space'
+    style {
+      icon tech:csharp
+      color gray
+    }
+  }
+
+  wayfinder = system 'Wayfinder Patient Care Aggregator' {
+    description 'Provides location and directions to NHS services.'
+    link https://nhsd-confluence.digital.nhs.uk/x/8w9xFg 'Confluence space'
+    style {
+      icon tech:csharp
+      color gray
+    }
+  }
+
+  pfps = system 'Patient Facing Prescription Service' {
+    description 'Provides access to patient prescriptions.'
+    link https://nhsd-confluence.digital.nhs.uk/x/coRhQ 'Confluence space'
+    style {
+      icon tech:python
+      color gray
+    }
+  }
+
+  ordapi = system 'ORD API' {
+    description 'Provides access to Organisation details'
+    link https://nhsd-confluence.digital.nhs.uk/x/1YfLB 'Confluence space'
+    style {
+      color gray
+    }
+  }
+
+  // Fully external systems
+  GPSystems = system 'GP Systems' {
+    description 'Systems used by General Practitioners (GPs) to manage patient records and appointments.'
+    style {
+      color gray
+    }
+
+    optum = system 'Optum (EMIS Web)' {
+      description 'A widely used GP system in the UK.'
+      link https://www.optum.com/solutions/uk-healthcare/emis-web.html 'Vendor page'
+      style { color gray }
+
+      optumIM1PFS = component 'Optum (EMIS Web) IM1 PFS API' {
+        description 'Provides access to patient records.'
+        link https://nhsd-confluence.digital.nhs.uk/spaces/DCA/pages/950562906/EMIS+PFS+API 'Confluence page'
+        style { color gray }
+
+        emisim1pfsapptmanagement = component 'Appointment Management' {
+          description 'Handles appointment management.'
+          style { color gray }
+
+          emisim1pfsappointments = component 'appointments' {
+            description 'GET /appointments\nPOST /appointments\nDELETE /appointments\nThe appointments resource is used to manage the appointments booked for a patient record. Appointments booked are managed per record, however, each ROSU has their own allocation of allowed appointments. This is managed by the Practice.
+For example; if the practice stipulates that the maximum number of appointments is 3, then each ROSU attached to a patient record is allowed to have 3 appointments booked for that patient at any one time. Appointments booked via the practice (either over the phone or in person) are not taken into account.'
+            
+            style { color gray }
+          }
+
+          emisim1pfsappointmentslots = component 'appointmentslots' {
+            description 'GET /appointmentslots/meta\nGET /appointmentslots\nThe appointmentslots resource is a representation of the available appointment diary held by the practice. Any sessions and slots made available for booking via PFS will be shown here. The resource is split into two individual components, the “metadata” and the slot list. The metadata call can be used to help define a filter when retrieving appointment slots. Sessions may be perceived as appointment slot containers for the purposes of the PFS API.'
+            style { color gray }
+          }
+        }
+
+        emisim1pfspatientcomms = component 'Communicate with Patient' {
+          description 'Handles communication with patients.'
+          style { color gray }
+
+          emisim1pfspatientcommsrecipients = component 'messagerecipients' {
+            description 'Handles recipients of communications.'
+            style { color gray }
+          }
+
+          emisim1pfspatientcommsmessages = component 'messages' {
+            description 'Handles messages.'
+            style { color gray }
+        }
+        }
+
+        emisim1pfsgetrecord = component 'Get Record' {
+          description 'Handles retrieval of patient records.'
+          style { color gray }
+
+          emisim1pfsgetrecorddemographics = component 'demographics' {
+            description 'Handles patient demographics.'
+            style { color gray }
+          }
+
+          emisim1pfsgetrecorddemographicsrequests = component 'demographicsrequest' {
+            description 'Handles requests for patient demographics.'
+            style { color gray }
+          }
+
+          emisim1pfsgetrecorddocuments = component 'documents' {
+            description 'Handles patient documents.'
+            style { color gray }
+          }
+
+          emisim1pfsgetrecordrecords = component 'record' {
+            description 'Handles patient record.'
+            style { color gray }
+          }
+
+        }
+
+        emisim1pfsprescriptions = component 'Prescriptions' {
+          description 'Handles patient prescriptions.'
+          style { color gray }
+
+          emisim1pfsgetrecordprescriptioncourses = component 'Courses' {
+            description 'Handles prescription courses.'
+            style { color gray }
+          }
+
+          emisim1pfsgetrecordprescriptionpharmacies = component 'pharmacies' {
+            description 'Handles pharmacies.'
+            style { color gray }
+          }
+
+          emisim1pfsgetrecordprescriptionrequests = component 'prescriptionrequests' {
+            description 'Handles prescription requests.'
+            style { color gray }
+
+          }
+        }
+
+        emisim1pfsusersessions = component 'User and Session Management' {
+          description 'Handles user and session management.'
+          style { color gray }
+
+          emisim1pfsusersessionsme = component 'me' {
+            description 'The me resource relates directly to the ROSU and their account in the clinical system. This resource has no interaction with any patient record. It also controls linking the subsidiary user to the ROSU in EMIS Web.'
+            style { color gray }
+          }
+
+          emisim1pfsusersessionspractices = component 'practices' {
+            description 'Gives details of practice, and services available from that practice.'
+            style { color gray }
+          }
+
+          emisim1pfsusersessionssessions = component 'sessions' {
+            description 'Handles sessions information.'
+            style { color gray }
+          }
+
+          emisim1pfsusersessionsusers = component 'users' {
+            description 'Handles users information.'
+            style { color gray }
+          }
+        }
+      }
+    }
+
+    tpps1 = system 'TPP SystmOne' {
+      description 'A widely used GP system in the UK.'
+      link https://www.tpp-uk.com/solutions/systmone/ 'Vendor page'
+      style {
+        color gray
+      }
+    }
+
+    medicus = system 'Medicus' {
+      description 'A GP system used by some practices in the UK.'
+      link https://www.medicus.com/ 'Vendor page'
+      style {
+        color gray
+      }
+    }
+
+    user -> iosapp 'Uses'
+    user -> androidapp 'Uses'
+    user -> webApp 'Uses'
+    user -> login 'Uses to authenticate' {
+      description 'User authentication is done by NHS login via OAuth 2.0 Authorization Code flow and OpenID Connect.'
+      technology 'OAuth 2.0/OpenID Connect'
+      link https://datatracker.ietf.org/doc/html/rfc6749 'OAuth 2.0 RFC'
+    }
+    backend -> login 'Uses to get user identity'
+    NativeApp -> login 'Uses to get authenticate users'
+    login -> pdsfhirapi 'Uses to get user details'
+    login -> pdsfhirapi 'Uses to update user details'
+    pdsadapter -> pdsfhirapi 'GET Patient'
+    pdsadapter -> servicesearch 'Uses to search for NHS services'
+    secondarycareadapter -> wayfinder 'Calls to get secondary care service details for user.'
+    epsadapter -> pfps 'Calls to get prescription details for user.'
+    odsservice -> ordapi 'Makes API Call' {
+      description 'Uses ORD API to look up ODS codes.'
+      link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-ord 'API documentation'
+    }
+
+  }
+}

@@ -1,0 +1,179 @@
+
+views {
+  view index {
+    title '01 Landscape / 01 Index'
+    description 'An initial very high level diagram, showing how the User uses the NHS App.'
+    include nhsappservice, user, login
+  }
+
+  view {
+    title '01 Landscape / 02 Landscape'
+    include *
+  }
+
+  view svcs of nhsappservice {
+    title '01 Landscape / 03 NHS App with External Services'
+    include *
+  }
+
+  
+dynamic view oauth {
+  title '01 Landscape / 04 OAuth2 Authorization Code Flow'
+  description 'Sequence of the Authorization Code Flow for OAuth2'
+
+  // 1
+  nhsappservice.androidapp -> nhsappservice.androidapp 'Generate PKCE pair' {
+    description 'Generate a code verifier and code challenge'
+  }
+
+  // 2
+  nhsappservice.androidapp -> nhsappservice.androidapp.androidwebview 'Tell WebView to navigate to NHS login' {
+    description 'Tell the WebView to open the NHS login page'
+  }
+  
+  // 3
+  nhsappservice.androidapp.androidwebview -> login 'Open login page, GET /authorize' {
+    description 'GET /authorize?response_type=code&client_id=...&redirect_uri=...&scope=openid%20profile%20email%20phone%20address&state=xyz&code_challenge=...&code_challenge_method=S256'
+  }
+
+  // 4
+  login -> nhsappservice.androidapp.androidwebview 'Ask user for credentials' {
+    description 'GET /authorize'
+  }
+
+  // 5
+  nhsappservice.androidapp.androidwebview -> login 'Credentials submitted' {
+    description 'Username, password and OTP code submitted'
+  }
+
+  // 6
+  login -> login 'Validate credentials' {
+    description 'Validate username, password and OTP code'
+  }
+
+  // 7
+  login -> nhsappservice.androidapp.androidwebview '302 Redirect response with authorization code as "code" query parameter' {
+    description '302 Redirect to redirect_uri with authorization code and state'
+  }
+
+  // 8
+  nhsappservice.androidapp -> nhsappservice.androidapp.androidwebview 'Response intercepted' {
+    description 'Native App intercepts the Response and extracts the code parameter'
+  }
+
+  // 9
+  nhsappservice.androidapp -> nhsappservice.backend.monolith.sessionapi 'POST /v1/session' {
+    description 'POST /v1/session with authorization code, redirect_uri, client_id, code_verifier'
+  }
+
+  // 10
+  nhsappservice.backend.monolith.sessionapi -> login 'Exchange code for tokens: POST /token' {
+    description 'POST /token with grant_type=authorization_code, code, redirect_uri, client_id, code_verifier'
+  }
+
+  // 11
+  login -> login 'Validate code, client, code_verifier' {
+    description 'Validate the authorization code, client_id and code_verifier'
+  }
+
+  // 12 
+  login -> nhsappservice.backend.monolith.sessionapi 'Tokens' {
+    description 'ID Token, Access Token, Refresh Token'
+  }
+
+  // 13
+  nhsappservice.backend.monolith.sessionapi -> nhsappservice.androidapp 'Tokens' {
+    description 'ID Token, Access Token, Refresh Token'
+  }
+
+  // 14
+  nhsappservice.androidapp -> nhsappservice.backend 'To be continued' {
+    description 'Still to be modelled...'
+  }
+
+}
+
+  view of nhsappservice.NativeApp {
+    title '02 NHS App / 01 Native App / 00 Overview'
+    include *
+  }
+
+  view of nhsappservice.NativeApp.iosapp {
+    title '02 NHS App / 01 Native App / 01 iOS App'
+    include *
+  }
+
+  view of nhsappservice.NativeApp.androidapp {
+    title '02 NHS App / 01 Native App / 02 Android App'
+    include *
+  }
+
+  view of nhsappservice.webApp {
+    title '02 NHS App / 04 Web App'
+    include *
+  }
+
+  view of nhsappservice.backend {
+    title '03 Backend / 01 Backend'
+    include *
+  }
+
+  view of nhsappservice.backend.monolith {
+    title '03 Backend / 02 Monolith'
+    description 'Shows how both the Native App and the Web App communicate to the original monolith backend service.'
+    include *
+  }
+
+  view of nhsappservice.backend.nandm {
+    title '03 Backend / 03 Notifications and Messaging'
+    include *
+  }
+
+  view of pds {
+    title '04 External Systems / 01 PDS'
+    include *
+  }
+
+  view of ordapi {
+    title '04 External Systems / 02 ORD API'
+    include *
+  }
+
+  view of GPSystems {
+    title '04 External Systems / 01 GP Systems / 00 Overview'
+    include *
+  }
+
+  view of GPSystems.optum {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 01 OPTUM'
+    include *
+  }
+  view of GPSystems.optum.optumIM1PFS {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 02 IM1 PFS API Features'
+    include *
+  }
+  view of GPSystems.optum.optumIM1PFS.emisim1pfsapptmanagement {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 03 IM1 PFS API Appointments'
+    include *
+  }
+
+  view of GPSystems.optum.optumIM1PFS.emisim1pfspatientcomms {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 04 IM1 PFS API Patient Comms'
+    include *
+  }
+
+  view of GPSystems.optum.optumIM1PFS.emisim1pfsgetrecord {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 05 IM1 PFS API Get Record'
+    include *
+  }
+
+  view of GPSystems.optum.optumIM1PFS.emisim1pfsprescriptions {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 06 IM1 PFS API Prescriptions'
+    include *
+  }
+
+  view of GPSystems.optum.optumIM1PFS.emisim1pfsusersessions {
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 07 IM1 PFS API User and Session Management'
+    include *
+  }
+}
