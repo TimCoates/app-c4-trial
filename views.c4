@@ -1,24 +1,24 @@
 
-views {
+views 'NHS App' {
   view appindex {
-    title 'NHS App / 01 Landscape / 01 Index'
+    title '01 Landscape / 01 Index'
     description 'An initial very high level diagram, showing how the User uses the NHS App.'
     include nhsappservice, user, login
   }
 
   view {
-    title 'NHS App / 01 Landscape / 02 Landscape'
+    title '01 Landscape / 02 Landscape'
     include *
   }
 
   view svcs of nhsappservice {
-    title 'NHS App / 01 Landscape / 03 NHS App with External Services'
+    title '01 Landscape / 03 NHS App with External Services'
     include *
   }
 
   
 dynamic view oauth {
-  title 'NHS App / 01 Landscape / 04 OAuth2 Authorization Code Flow'
+  title '01 Landscape / 04 OAuth2 Authorization Code Flow'
   description 'Sequence of the Authorization Code Flow for OAuth2'
 
   // 1
@@ -101,12 +101,12 @@ dynamic view oauth {
     description 'Store userinfo and device info in the database'
   }
 
-  // 13
+  // 17
   nhsappservice.backend.monolith.sessionapi -> nhsappservice.androidapp.androidapplogic 'Info returned to App with Cookies' {
-    description 'ID Token, Access Token, Refresh Token'
+    description 'Service Journey Rules, ID Token, Access Token, Refresh Token'
   }
 
-  // 14
+  // 18
   nhsappservice.androidapp -> nhsappservice.backend 'To be continued' {
     description 'Still to be modelled...'
   }
@@ -114,86 +114,86 @@ dynamic view oauth {
 }
 
   view of nhsappservice.NativeApp {
-    title 'NHS App / 02 NHS App / 01 Native App / 00 Overview'
+    title '02 NHS App / 01 Native App / 00 Overview'
     include *
   }
 
   view of nhsappservice.NativeApp.iosapp {
-    title 'NHS App / 02 NHS App / 01 Native App / 01 iOS App'
+    title '02 NHS App / 01 Native App / 01 iOS App'
     include *
   }
 
   view of nhsappservice.NativeApp.androidapp {
-    title 'NHS App / 02 NHS App / 01 Native App / 02 Android App'
+    title '02 NHS App / 01 Native App / 02 Android App'
     include *
   }
 
   view of nhsappservice.webApp {
-    title 'NHS App / 02 NHS App / 04 Web App'
+    title '02 NHS App / 04 Web App'
     include *
   }
 
   view of nhsappservice.backend {
-    title 'NHS App / 03 Backend / 01 Backend'
+    title '03 Backend / 01 Backend'
     include *
   }
 
   view of nhsappservice.backend.monolith {
-    title 'NHS App / 03 Backend / 02 Monolith'
+    title '03 Backend / 02 Monolith'
     description 'Shows how both the Native App and the Web App communicate to the original monolith backend service.'
     include *
   }
 
   view of nhsappservice.backend.nandm {
-    title 'NHS App / 03 Backend / 03 Notifications and Messaging'
+    title '03 Backend / 03 Notifications and Messaging'
     include *
   }
 
   view of pds {
-    title 'NHS App / 04 External Systems / 01 PDS'
+    title '04 External Systems / 01 PDS'
     include *
   }
 
   view of ordapi {
-    title 'NHS App / 04 External Systems / 02 ORD API'
+    title '04 External Systems / 02 ORD API'
     include *
   }
 
   view of GPSystems {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 00 Overview'
+    title '04 External Systems / 01 GP Systems / 00 Overview'
     include *
   }
 
   view of GPSystems.optum {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 01 OPTUM'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 01 OPTUM'
     include *
   }
   view of GPSystems.optum.optumIM1PFS {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 02 IM1 PFS API Features'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 02 IM1 PFS API Features'
     include *
   }
   view of GPSystems.optum.optumIM1PFS.emisim1pfsapptmanagement {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 03 IM1 PFS API Appointments'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 03 IM1 PFS API Appointments'
     include *
   }
 
   view of GPSystems.optum.optumIM1PFS.emisim1pfspatientcomms {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 04 IM1 PFS API Patient Comms'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 04 IM1 PFS API Patient Comms'
     include *
   }
 
   view of GPSystems.optum.optumIM1PFS.emisim1pfsgetrecord {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 05 IM1 PFS API Get Record'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 05 IM1 PFS API Get Record'
     include *
   }
 
   view of GPSystems.optum.optumIM1PFS.emisim1pfsprescriptions {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 06 IM1 PFS API Prescriptions'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 06 IM1 PFS API Prescriptions'
     include *
   }
 
   view of GPSystems.optum.optumIM1PFS.emisim1pfsusersessions {
-    title 'NHS App / 04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 07 IM1 PFS API User and Session Management'
+    title '04 External Systems / 01 GP Systems / 01 Optum (EMIS Web) / 07 IM1 PFS API User and Session Management'
     include *
   }
 }

@@ -1,0 +1,48 @@
+
+// Here we define the details of Wayfinder a bit more
+model {
+  // wayfinder is defined in landscape.c4
+  extend wayfinder {
+
+    // extend and define wayfinder.aggregator
+    aggregator = component 'Patient Care Aggregator' {
+        description 'Patient Care aggregator microservice'
+        technology 'Node.JS Lambda Functions'
+        icon aws:lambda
+    }
+
+    recordService = container 'Record Service' {
+        description 'Service to identify which Services have Secondary Care records for a given patient'
+
+        recordServiceAPI = component 'Record Service API' {
+            description 'API for PEPs to submit NHS Numbers to the Record Service'
+            technology 'Node.JS Lambda Functions'
+            icon aws:lambda
+        }
+
+        recordServiceDB = component 'Record Service Database' {
+            description 'DynamoDB table to store which Services have Secondary Care records for a given patient'
+            technology 'PostgreSQL'
+            icon tech:postgresql
+        }
+    }
+
+  }
+
+  aggregator -> recordServiceAPI 'Uses'
+  recordServiceAPI -> recordServiceDB 'Reads from'
+}
+
+views 'Wayfinder' {
+  view wfindex of wayfinder {
+    title '01 Overview'
+    description 'An initial very high level diagram, showing how Wayfinder is structured.'
+    include *
+  }
+
+  view wfrecordService of wayfinder.recordService {
+    title '02 Record Service'
+    description 'The Record Service is used to identify which Services have Secondary Care records for a given patient.'
+    include wayfinder.recordService, wayfinder.recordService.recordServiceAPI, wayfinder.recordService.recordServiceDB, wayfinder.aggregator
+  }
+}

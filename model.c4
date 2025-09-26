@@ -333,7 +333,7 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     description 'Provides location and directions to NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/8w9xFg 'Confluence space'
     style {
-      icon tech:csharp
+      icon aws:lambda
       color gray
     }
   }
@@ -508,7 +508,7 @@ For example; if the practice stipulates that the maximum number of appointments 
     login -> pdsfhirapi 'Uses to update user details'
     pdsadapter -> pdsfhirapi 'GET Patient'
     pdsadapter -> servicesearch 'Uses to search for NHS services'
-    secondarycareadapter -> wayfinder 'Calls to get secondary care service details for user.'
+    secondarycareadapter -> wayfinder.aggregator 'Calls to get secondary care service details for user.'
     epsadapter -> pfps 'Calls to get prescription details for user.'
     odsservice -> ordapi 'Makes API Call' {
       description 'Uses ORD API to look up ODS codes.'
