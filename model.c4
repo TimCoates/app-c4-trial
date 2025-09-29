@@ -318,6 +318,13 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       color gray
     }
 
+    pdsdatabase = component 'RIAK Database' {
+      style {
+        color slate
+        shape cylinder
+      }
+    }
+
     component pdsfhirapi 'PDS FHIR API' {
       description 'The PDS FHIR API provides access to patient demographic details stored in PDS.'
       link https://digital.nhs.uk/services/personal-demographics-service/pds-fhir-api 'Public pages'
@@ -344,6 +351,9 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
         color gray
       }
     }
+
+    pdshl7v3api -> pdsdatabase 'Read from and write to'
+    pdsfhirapi -> pdsdatabase 'Read from and write to'
   }
 
   servicesearch = system 'Service Search' {
