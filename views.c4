@@ -151,7 +151,7 @@ dynamic view oauth {
 
   view PDS of pds {
     title '04 External Systems / 01 PDS'
-    include *
+    include pds, pds.pdsfhirapi, pds.pdsfhirapi.pdsfhirapiget, pds.pdsfhirapi.pdsfhirapipatch
   }
 
   view ORD of ordapi {

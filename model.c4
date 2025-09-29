@@ -325,6 +325,17 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
         icon tech:amazon-web-services
         color gray
       }
+
+      pdsfhirapiget = component 'Get patient details: GET /Patient/{id}' {
+        description 'Use this endpoint to get patient details from PDS for a given NHS number. You cannot get a patients related people details, use the RelatedPerson endpoint instead.'
+        link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'Api specification'
+      }
+
+      pdsfhirapipatch = component 'Update patient details: PATCH /Patient/{id}' {
+        description 'Use this endpoint to update patient details in PDS.'
+        link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#patch-/Patient/-id- 'API specification'
+      }
+
     }
 
     component pdshl7v3api 'PDS HL7v3 API' {
@@ -519,9 +530,13 @@ For example; if the practice stipulates that the maximum number of appointments 
     }
     backend -> login 'Uses to get user identity'
     NativeApp -> login 'Uses to get authenticate users'
-    login -> pdsfhirapi 'Uses to get user details'
-    login -> pdsfhirapi 'Uses to update user details'
-    pdsadapter -> pdsfhirapi 'GET Patient'
+    login -> pdsfhirapiget 'Uses to get user details: GET /Patient/{id}' {
+      technology 'REST FHIR API over HTTPS'
+    }
+    login -> pdsfhirapipatch 'Uses to update user details: PATCH /Patient/{id}'  {
+      technology 'REST FHIR API over HTTPS'
+    }
+    pdsadapter -> pdsfhirapiget 'GET Patient'
     pdsadapter -> servicesearch 'Uses to search for NHS services'
     secondarycareadapter -> wayfinder.aggregator 'Calls to get secondary care service details for user.'
     epsadapter -> pfps 'Calls to get prescription details for user.'
