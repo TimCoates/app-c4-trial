@@ -133,7 +133,10 @@ model {
       }
 
       secondarycareadapter = container 'Secondary Care Adapter' {
-        description 'Handles communication with the Secondary Care System.'
+        description 'Handles communication with Wayfinder Patient Care Aggregator'
+        link https://nhsd-confluence.digital.nhs.uk/x/LUJSMQ 'Confluence page'
+        link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/827474477/NHSApp+Secondary+Care+API+Adapter#NHSAppSecondaryCareAPIAdapter-Flow 'Processing'
+        link https://github.com/NHSDigital/nhsapp-secondary-care-api-adapter 'GitHub repo'
         style {
           icon tech:csharp
         }
