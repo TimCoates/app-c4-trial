@@ -50,6 +50,7 @@ model {
             color muted
           }
         }
+        androidapplogic -> androidwebview 'Drives'
       }
 
       iosapp = container 'Native iOS App' {
@@ -60,6 +61,13 @@ model {
           shape mobile
         }
 
+        iosapplogic = component 'App Logic' {
+          description 'Runs the native app functionality.'
+          style {
+            icon tech:swift
+          }
+        }
+
         ioswebview = component 'Web View' {
           description 'Renders web content within the app.'
           style {
@@ -67,6 +75,7 @@ model {
             color muted
           }
         }
+        iosapplogic -> ioswebview 'Drives'
       }
     }
 
