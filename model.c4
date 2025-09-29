@@ -19,7 +19,7 @@ model {
     description 'Allows users to access a range of NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
 
-    webApp = component 'Web version of the NHS App' {
+    webApp = container 'Web version of the NHS App' {
       description 'NHS App as viewed in a web browser.'
       technology 'Vue.js, HTML, CSS'
       icon tech:vue
@@ -36,7 +36,7 @@ model {
           shape mobile
         }
 
-        androidapplogic = component 'App Logic' {
+        androidapplogic = container 'App Logic' {
           description 'Runs the native app functionality.'
           style {
             icon tech:kotlin
@@ -61,7 +61,7 @@ model {
           shape mobile
         }
 
-        iosapplogic = component 'App Logic' {
+        iosapplogic = container 'App Logic' {
           description 'Runs the native app functionality.'
           style {
             icon tech:swift
@@ -79,10 +79,10 @@ model {
       }
     }
 
-    backend = component 'Backend' {
+    backend = container 'Backend' {
       description 'Handles API requests from the Native App and communicates with external services.'
 
-      monolith = component 'App backend monolith' {
+      monolith = container 'App backend monolith' {
         description 'Handles App backend calls.'
         link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker 'Code repository'
         style {
@@ -90,21 +90,21 @@ model {
           opacity 10%
         }
 
-        sjrapi = component 'SJR API' {
+        sjrapi = container 'SJR API' {
           description 'Handles retrieval of SJR'
           style {
             icon tech:csharp
           }
         }
 
-        pfsapi = component 'PFS API' {
+        pfsapi = container 'PFS API' {
           description 'Handles interactions with PFS Services'
           style {
             icon tech:csharp
           }
         }
 
-        sessionapi = component 'Session API' {
+        sessionapi = container 'Session API' {
           description 'Handles session management'
           style {
             icon tech:csharp
@@ -132,21 +132,21 @@ model {
 
       }
 
-      secondarycareadapter = component 'Secondary Care Adapter' {
+      secondarycareadapter = container 'Secondary Care Adapter' {
         description 'Handles communication with the Secondary Care System.'
         style {
           icon tech:csharp
         }
       }
 
-      gpconnectadapter = component 'GP Connect Adapter' {
+      gpconnectadapter = container 'GP Connect Adapter' {
         description 'Handles communication with the GP Connect services.'
         style {
           icon tech:csharp
         }
       }
 
-      pdsadapter = component 'PDS Adapter' {
+      pdsadapter = container 'PDS Adapter' {
         description 'Handles communication with the PDS.'
         link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
         link https://github.com/NHSDigital/nhsapp-pds-api-adapter 'Code repository'
@@ -156,7 +156,7 @@ model {
         }
       }
 
-      nandm = component 'Notifications and Messaging' {
+      nandm = container 'Notifications and Messaging' {
         description 'Handles Patient Messages and Notifications.'
         style {
           icon tech:csharp
@@ -178,7 +178,7 @@ model {
         }
       }
 
-      epsadapter = component 'EPS Adapter' {
+      epsadapter = container 'EPS Adapter' {
         description 'Handles calls to EPS'
         style {
           icon tech:csharp
@@ -203,6 +203,9 @@ model {
       description 'Makes API Calls To'
       technology 'REST API over HTTPS'
     }
+
+    pfsapi -> sjrapi 'Makes API Calls To'
+
     iosapp -> sessionapi 'Uses for session management' {
       description 'POST /v1/session and GET /v1/session'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
@@ -376,7 +379,7 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       link https://www.optum.com/solutions/uk-healthcare/emis-web.html 'Vendor page'
       style { color gray }
 
-      optumIM1PFS = component 'Optum (EMIS Web) IM1 PFS API' {
+      optumIM1PFS = container 'Optum (EMIS Web) IM1 PFS API' {
         description 'Provides access to patient records.'
         link https://nhsd-confluence.digital.nhs.uk/spaces/DCA/pages/950562906/EMIS+PFS+API 'Confluence page'
         style { color gray }
