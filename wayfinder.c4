@@ -1,48 +1,129 @@
-
+specification {
+    tag PEP
+    element PEP {
+    #PEP
+    notation "Patient Engagement Platform"
+    style {
+        shape rectangle
+        color gray
+        icon ./External.png
+    }
+  }
+}
 // Here we define the details of Wayfinder a bit more
 model {
+
+    PEPS = container {
+        #PEP
+        PKB = PEP { title 'PKB (Patient Knows Best)' }
+        Accurx = PEP { title 'AccuRX' }
+        DrDr = PEP { title 'DrDr' }
+        PathEKS = PEP { title 'PathEKS' }
+        EPIC = PEP { title 'Epic (x9)' style { multiple true } }
+        HealthCall = PEP { title 'Healthcall' }
+        Interweave = PEP { title 'Interweave' }
+        Maia = PEP { title 'Maia (Formerly Mindwave)' }
+        Morecambe = PEP { title 'Morecambe Bay' }
+        Netcall = PEP { title 'Netcall' }
+        Orion = PEP { title 'Orion' }
+        Tameside = PEP { title 'Tameside & Glossop' }
+        Wellola = PEP { title 'Wellola' }
+        Zesty = PEP { title 'Zesty' }
+    }
+    odsapi = system 'ODS API' {
+        description 'Provides access to Organisation details'
+        link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-fhir 'API Spec'
+        style {
+        color gray
+        }
+    }
 
     // wayfinder is defined in model.c4
     extend wayfinder {
 
         // extend and define wayfinder.aggregator
-        aggregator = component 'Patient Care Aggregator' {
+        aggregator = container 'Patient Care Aggregator' {
             description 'Patient Care aggregator microservice'
             technology 'Node.JS Lambda Functions'
             style {
                 color gray
             }
-        }
-
-        recordService = container 'Record Service' {
-            description 'Service to identify which Services have Secondary Care records for a given patient'
-            style {
-                color gray
-            }
-
-            recordServiceAPI = component 'Record Service API' {
-                description 'API for PEPs to submit NHS Numbers to the Record Service'
-                technology 'Node.JS Lambda Functions'
+        
+            recordService = container 'Record Service' {
+                description 'Service to identify which Services have Secondary Care records for a given patient'
                 style {
-                    icon aws:lambda
                     color gray
+                }
+
+                recordServiceAPI = component 'Record Service API' {
+                    description 'API for PEPs to submit NHS Numbers to the Record Service'
+                    technology 'Node.JS Lambda Functions'
+                    style {
+                        icon aws:lambda
+                        color gray
+                    }
+                }
+
+                recordServiceDB = component 'Record Database' {
+                    description 'DynamoDB table to store which Services have Secondary Care records for a given patient'
+                    technology 'Amazon DocumentDB'
+                    style {
+                        icon aws:document-db
+                        color gray
+                    }
                 }
             }
 
-            recordServiceDB = component 'Record Service Database' {
-                description 'DynamoDB table to store which Services have Secondary Care records for a given patient'
-                technology 'PostgreSQL'
-                style {
-                    icon tech:postgresql
-                    color gray
+            eventService = container 'Event Service' {
+                eventServiceAPI = component 'Event Service API' {}
+                cache = component 'ODS Cache' {
+                    technology 'Redis'
+                    style {
+                        icon tech:redis
+                    }
                 }
+
+                eventServiceAPI -> cache 'Cache data'
             }
+
         }
 
     }
 
-    aggregator -> recordServiceAPI 'Uses'
-    recordServiceAPI -> recordServiceDB 'Reads from'
+    eventServiceAPI -> recordServiceAPI 'Uses'
+    eventService -> odsapi 'Lookup Organisation details' { technology 'Not Authenticated' }
+    recordServiceAPI -> recordServiceDB 'Reads from\nWrites to'
+
+    PKB -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    Accurx -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    DrDr -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    PathEKS -> recordServiceAPI 'Submit Patient identities' 'PathEKS (East Kent)' { technology 'API Key'}
+    EPIC -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    HealthCall -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    Interweave -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    Maia -> recordServiceAPI 'Submit Patient identities' 'Maia (formerly known as Mindwave)' { technology 'API Key'}
+    Morecambe -> recordServiceAPI 'Submit Patient identities' 'Morecambe Bay' { technology 'API Key'}
+    Netcall -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    Orion -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
+    Tameside -> recordServiceAPI 'Submit Patient identities' 'Tameside & Glossop' { technology 'API Key'}
+    Wellola -> recordServiceAPI 'Submit Patient identities' { technology 'API Key' }
+    Zesty -> recordServiceAPI 'Submit Patient identities' { technology 'API Key' }
+
+    eventServiceAPI -> PKB 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Accurx 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> DrDr 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> PathEKS 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> EPIC 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> HealthCall 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Interweave 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Maia 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Morecambe 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Netcall 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Orion 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Tameside 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Wellola 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+    eventServiceAPI -> Zesty 'Fetch Patient records' { technology 'OAuth 2.0 Client Credentials'}
+
 }
 
 views 'Wayfinder' {
@@ -50,11 +131,24 @@ views 'Wayfinder' {
         title '01 Overview'
         description 'An initial very high level diagram, showing how Wayfinder is structured.'
         include *
+        include PEPS
     }
 
-    view wfrecordService of wayfinder.recordService {
-        title '02 Record Service'
+    view wfaggregator of wayfinder.aggregator {
+        title '02 Aggregator'
+        description 'The Record Service is used to identify which Services have Secondary Care records for a given patient.'
+        include wayfinder.**
+    }
+
+    view wfrecordService of wayfinder.aggregator.recordService {
+        title '03 Record Service'
         description 'The Record Service is used to identify which Services have Secondary Care records for a given patient.'
         include wayfinder.recordService, wayfinder.recordService.recordServiceAPI, wayfinder.recordService.recordServiceDB, wayfinder.aggregator
+        include PEPS
+    }
+
+    view wfEventService of wayfinder.aggregator {
+        title '04 Event Service'
+        include *
     }
 }

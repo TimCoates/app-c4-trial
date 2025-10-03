@@ -9,6 +9,7 @@ views 'NHS App' {
   view Landscape02 {
     title '01 Landscape / 02 Landscape'
     include *
+    exclude element.tag = #PEP
   }
 
   view svcs of nhsappservice {
