@@ -1,0 +1,152 @@
+specification {
+  tag Terraform
+  tag Bash
+  tag AzDO
+  deploymentNode environment
+  deploymentNode region
+  deploymentNode zone
+  deploymentNode kubernetes {
+    // Nodes have same styling options
+    style {
+      color blue
+      icon azure:aks-automatic
+      multiple true
+    }
+  }
+  deploymentNode podTerraform {
+    #Terraform
+    notation 'K8S Pod, deployed by Terraform'
+    technology 'Kubernetes Pod'
+    style { icon tech:terraform }
+  }
+  deploymentNode podBash {
+    #Bash
+    notation 'K8S Pod, deployed by shell script'
+    technology 'Kubernetes Pod'
+    style { icon tech:bash }
+  }
+  deploymentNode podAzDO {
+    #Bash
+    notation 'K8S Pod, deployed by Azure DevOps'
+    technology 'Kubernetes Pod'
+    style { icon azure:azure-dev-ops }
+  }
+}
+
+deployment {
+  environment prod {
+    UKS = region 'UK South' {
+      cluster1 = kubernetes 'Kubernetes Cluster South 1' {
+        podMetrics = podTerraform 'Metrics Server'
+        podTigera = podTerraform 'tigera'
+        podCalico = podTerraform 'Calico'
+        podDefender = podTerraform 'Defender'
+        podKonnectivity = podTerraform 'Konnectivity'
+        podDNS = podTerraform 'CoreDNS'
+
+        podCertMgr = podBash 'Cert Manager'
+        podNginxIngress = podBash 'nginx-ingress'
+        poOutCold = podBash 'OutCold Collector'
+        podCSI = podBash 'CSI Driver'
+
+        podIproxy = podAzDO 'iproxy'
+        podUtil = podAzDO 'util'
+        podGpc = podAzDO 'GP Connect Adapter'
+        podPds = podAzDO 'PDS'
+        podEps = podAzDO 'pod EPS Adapter'
+        podCid = podAzDO 'Citizen ID (NHS login)'
+        podEventLogger = podAzDO 'eventlogger'
+        podSjr = podAzDO 'SJR'
+        podBackend = podAzDO 'Backend'
+        podWeb = podAzDO 'Web' {
+          description 'What the user sees'
+        }
+      }
+      cluster2 = kubernetes 'Kubernetes Cluster South 2' {
+        podMetrics = podTerraform 'Metrics Server'
+        podTigera = podTerraform 'tigera'
+        podCalico = podTerraform 'Calico'
+        podDefender = podTerraform 'Defender'
+        podKonnectivity = podTerraform 'Konnectivity'
+        podDNS = podTerraform 'CoreDNS'
+
+        podCertMgr = podBash 'Cert Manager'
+        podNginxIngress = podBash 'nginx-ingress'
+        poOutCold = podBash 'OutCold Collector'
+        podCSI = podBash 'CSI Driver'
+
+        podIproxy = podAzDO 'iproxy'
+        podUtil = podAzDO 'util'
+        podGpc = podAzDO 'GP Connect Adapter'
+        podPds = podAzDO 'PDS'
+        podEps = podAzDO 'pod EPS Adapter'
+        podCid = podAzDO 'Citizen ID (NHS login)'
+        podEventLogger = podAzDO 'eventlogger'
+        podSjr = podAzDO 'SJR'
+        podBackend = podAzDO 'Backend'
+        podWeb = podAzDO 'Web' {
+          description 'What the user sees'
+        }
+      }
+    }
+    UKW = region 'UK West' {
+      cluster = kubernetes 'Kubernetes Cluster West 1' {
+        podMetrics = podTerraform 'Metrics Server'
+        podTigera = podTerraform 'tigera'
+        podCalico = podTerraform 'Calico'
+        podDefender = podTerraform 'Defender'
+        podKonnectivity = podTerraform 'Konnectivity'
+        podDNS = podTerraform 'CoreDNS'
+
+        podCertMgr = podBash 'Cert Manager'
+        podNginxIngress = podBash 'nginx-ingress'
+        poOutCold = podBash 'OutCold Collector'
+        podCSI = podBash 'CSI Driver'
+
+        podIproxy = podAzDO 'iproxy'
+        podUtil = podAzDO 'util'
+        podGpc = podAzDO 'GP Connect Adapter'
+        podPds = podAzDO 'PDS'
+        podEps = podAzDO 'pod EPS Adapter'
+        podCid = podAzDO 'Citizen ID (NHS login)'
+        podEventLogger = podAzDO 'eventlogger'
+        podSjr = podAzDO 'SJR'
+        podBackend = podAzDO 'Backend'
+        podWeb = podAzDO 'Web' {
+          description 'What the user sees'
+        }
+      }
+    }
+  }
+}
+views{
+  deployment view deploymentIndex {
+    title 'Deployment / Production Deployment / Index'
+    include prod, prod.UKS, prod.UKW
+  	autoLayout TopBottom
+	}
+
+  deployment view uks {
+    title 'Deployment / Production Deployment / UK South / Index'
+    include prod, prod.UKS, prod.UKS.cluster1, prod.UKS.cluster2
+  }
+  deployment view ukw {
+    title 'Deployment / Production Deployment / UK West / Index'
+    include prod, prod.UKW, prod.UKW.cluster
+  }
+
+  deployment view uks1 {
+    title 'Deployment / Production Deployment / UK South / UK South Cluster 1'
+    include prod, prod.UKS, prod.UKS.cluster1, prod.UKS.cluster1.*
+  }
+  deployment view uks2 {
+    title 'Deployment / Production Deployment / UK South / UK South Cluster 2'
+    include prod, prod.UKS, prod.UKS.cluster2, prod.UKS.cluster2.*
+  }
+  deployment view ukw1 {
+    title 'Deployment / Production Deployment / UK West / UK West Cluster'
+    include prod, prod.UKW, prod.UKW.cluster, prod.UKW.cluster.*
+  }
+
+
+}
