@@ -150,7 +150,7 @@ model {
       }
 
       pdsadapter = container 'PDS Adapter' {
-        description 'Handles communication with the PDS.'
+        description 'Communicates with PDS.'
         link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
         link https://github.com/NHSDigital/nhsapp-pds-api-adapter 'Code repository'
 
@@ -188,6 +188,19 @@ model {
         }
       }
 
+      utiladapter = container 'Util Adapter' {
+        description 'TBC'
+        style {
+          icon tech:csharp
+        }
+      }
+
+      eventLogger = container 'Event Logger' {
+        description 'TBC'
+        style {
+          icon tech:csharp
+        }
+      }
     }
 
     // Relationships
@@ -197,6 +210,7 @@ model {
     webApp -> secondarycareadapter 'Makes API Calls To'
     webApp -> nandm 'Makes API Calls To'
     webApp -> epsadapter 'Makes API Calls To'
+    webApp -> utiladapter 'Makes API Calls To'
     webApp ->sessionapi 'Uses for session management' {
       description 'POST /v1/session and GET /v1/session'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
