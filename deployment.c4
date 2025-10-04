@@ -37,7 +37,6 @@ deployment {
   environment prod {
     UKS = region 'UK South' {
       cluster1 = kubernetes 'Kubernetes Cluster South 1' {
-      cluster = kubernetes 'Kubernetes Cluster West 1' {
         podMetrics = podTerraform 'Metrics Server'
         podTigera = podTerraform 'tigera'
         podCalico = podTerraform 'Calico'
@@ -47,7 +46,7 @@ deployment {
 
         podCertMgr = podBash 'Cert Manager'
         podNginxIngress = podBash 'nginx-ingress'
-        poOutCold = podBash 'OutCold Collector'
+        podOutCold = podBash 'OutCold Collector'
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
@@ -63,9 +62,7 @@ deployment {
           description 'What the user sees'
         }
       }
-    }
       cluster2 = kubernetes 'Kubernetes Cluster South 2' {
-      cluster = kubernetes 'Kubernetes Cluster West 1' {
         podMetrics = podTerraform 'Metrics Server'
         podTigera = podTerraform 'tigera'
         podCalico = podTerraform 'Calico'
@@ -75,7 +72,7 @@ deployment {
 
         podCertMgr = podBash 'Cert Manager'
         podNginxIngress = podBash 'nginx-ingress'
-        poOutCold = podBash 'OutCold Collector'
+        podOutCold = podBash 'OutCold Collector'
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
@@ -91,7 +88,6 @@ deployment {
           description 'What the user sees'
         }
       }
-    }
     }
     UKW = region 'UK West' {
       cluster = kubernetes 'Kubernetes Cluster West 1' {
@@ -104,7 +100,7 @@ deployment {
 
         podCertMgr = podBash 'Cert Manager'
         podNginxIngress = podBash 'nginx-ingress'
-        poOutCold = podBash 'OutCold Collector'
+        podOutCold = podBash 'OutCold Collector'
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
@@ -143,6 +139,12 @@ views{
     title 'Deployment / Production Deployment / UK South / UK South Cluster 1'
     include prod, prod.UKS, prod.UKS.cluster1, prod.UKS.cluster1.*
   }
+  /**
+   * @likec4-generated(v1)
+   * iKRoYXNo2ShiYjc0OTEzZjdhYzM2NDIxYmE2YmUwMjQxZTE0Zjg3MTg3NDVlNjdjqmF1dG9MYXlvdXSBqWRpcmVjdGlvbqJUQqF4AKF5FaV3aWR0aM0JOqZoZWlnaHTNBQmlbm9kZXPeABekcHJvZIKhYpQAFc0JOs0FCaFjw6hwcm9kLlVLU4KhYpQoTM0I6s0EqqFjw7Fwcm9kLlVLUy5jbHVzdGVyMoKhYpRQzIPNCJrNBEuhY8O8cHJvZC5VS1MuY2x1c3RlcjIucG9kTWV0cmljc4KhYpR4zLrNAUDMtKFjwrtwcm9kLlVLUy5jbHVzdGVyMi5wb2RUaWdlcmGCoWKUzQI6zLrNAUDMtKFjwrtwcm9kLlVLUy5jbHVzdGVyMi5wb2RDYWxpY2+CoWKUzQP8zLrNAUDMtKFjwr1wcm9kLlVLUy5jbHVzdGVyMi5wb2REZWZlbmRlcoKhYpTNBcDMus0BQMy0oWPC2SFwcm9kLlVL
+   * Uy5jbHVzdGVyMi5wb2RLb25uZWN0aXZpdHmCoWKUzQeCzLrNAUDMtKFjwrhwcm9kLlVLUy5jbHVzdGVyMi5wb2RETlOCoWKUeM0B1c0BQMy0oWPCvHByb2QuVUtTLmNsdXN0ZXIyLnBvZENlcnRNZ3KCoWKUzQI6zQHVzQFAzLShY8LZIXByb2QuVUtTLmNsdXN0ZXIyLnBvZE5naW54SW5ncmVzc4KhYpTNA/zNAdXNAUDMtKFjwrxwcm9kLlVLUy5jbHVzdGVyMi5wb2RPdXRDb2xkgqFilM0FwM0B1c0BQMy0oWPCuHByb2QuVUtTLmNsdXN0ZXIyLnBvZENTSYKhYpTNB4LNAdXNAUDMtKFjwrtwcm9kLlVLUy5jbHVzdGVyMi5wb2RJcHJveHmCoWKUeM0C3s0BQMy0oWPCuXByb2QuVUtTLmNsdXN0ZXIyLnBvZFV0aWyCoWKUzQI6zQLezQFAzLShY8K4cHJvZC5VS1MuY2x1
+   * c3RlcjIucG9kR3BjgqFilM0D/M0C3s0Bbcy0oWPCuHByb2QuVUtTLmNsdXN0ZXIyLnBvZFBkc4KhYpTNBcDNAt7NAUDMtKFjwrhwcm9kLlVLUy5jbHVzdGVyMi5wb2RFcHOCoWKUzQeCzQLezQFAzLShY8K4cHJvZC5VS1MuY2x1c3RlcjIucG9kQ2lkgqFilHjNA/LNAUDMtKFjwtkgcHJvZC5VS1MuY2x1c3RlcjIucG9kRXZlbnRMb2dnZXKCoWKUzQI6zQPyzQFAzLShY8K4cHJvZC5VS1MuY2x1c3RlcjIucG9kU2pygqFilM0D/M0D8s0BQMy0oWPCvHByb2QuVUtTLmNsdXN0ZXIyLnBvZEJhY2tlbmSCoWKUzQXAzQPyzQFAzLShY8K4cHJvZC5VS1MuY2x1c3RlcjIucG9kV2VigqFilM0Hgs0D8s0BQMy0oWPCpWVkZ2VzgA==
+   */
   deployment view uks2 {
     title 'Deployment / Production Deployment / UK South / UK South Cluster 2'
     include prod, prod.UKS, prod.UKS.cluster2, prod.UKS.cluster2.*
