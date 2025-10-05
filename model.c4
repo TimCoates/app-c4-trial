@@ -3,6 +3,12 @@ specification {
   element system
   element container
   element component
+  element webview {
+    style {
+      shape browser
+      color muted
+    }
+  }
 }
 
 model {
@@ -43,18 +49,17 @@ model {
           }
         }
 
-        androidwebview = component 'Web View' {
-          description 'Renders web content within the app.'
-          style {
-            shape browser
-            color muted
-          }
+        androidwebview = webview 'Web View' {
+          description 'An Andoid WebView component that renders web content within the app.'
+          link https://developer.android.com/reference/android/webkit/WebView 'Android WebView documentation'
         }
-        androidapplogic -> androidwebview 'Drives'
+        androidapplogic -> androidwebview 'Drives' {
+          description 'The Android native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
+        }
       }
 
       iosapp = container 'Native iOS App' {
-        description 'Native Android App that allows users to access a range of NHS services.'
+        description 'Native iOS App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-ios 'Code repository'
         style {
           icon tech:swift
@@ -68,19 +73,16 @@ model {
           }
         }
 
-        ioswebview = component 'Web View' {
-          description 'Renders web content within the app.'
-          style {
-            shape browser
-            color muted
-          }
+        ioswebview = webview 'Web View' {
+          description 'An iOS WebView control, that renders web content within the app.'
+          link https://developer.apple.com/design/human-interface-guidelines/web-views 'Apple WebView documentation'
         }
-        iosapplogic -> ioswebview 'Drives'
+        iosapplogic -> ioswebview 'The iOS native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
       }
     }
 
     backend = container 'Backend' {
-      description 'Handles API requests from the Native App and communicates with external services.'
+      description 'A collection of components that handle API requests from the Native App and Web App, and communicate with external services.'
 
       monolith = container 'App backend monolith' {
         description 'Handles App backend calls.'
