@@ -142,9 +142,18 @@ model {
         link https://nhsd-confluence.digital.nhs.uk/x/LUJSMQ 'Confluence page'
         link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/827474477/NHSApp+Secondary+Care+API+Adapter#NHSAppSecondaryCareAPIAdapter-Flow 'Processing'
         link https://github.com/NHSDigital/nhsapp-secondary-care-api-adapter 'GitHub repo'
-        style {
-          icon tech:csharp
+        style { icon tech:csharp }
+        secondarycareadapterlogic = component 'Secondary Care Adapter Logic' {
+          description 'Represents the compute/logic in the Secondary Care Adapter'
+          style { icon tech:csharp }
         }
+        secondarycareadapterapi = component 'Secondary Care Adapter API' {
+          description '''
+          `GET /v1/SecondaryCare/summary`
+          '''
+          style { icon tech:csharp }
+        }
+        this.secondarycareadapterapi -> this.secondarycareadapterlogic 'Passes incoming requests'
       }
 
       gpconnectadapter = container 'GP Connect Adapter' {
@@ -236,7 +245,7 @@ model {
 
       '''
     }
-    webApp -> secondarycareadapter 'Makes API Calls To'
+    webApp -> secondarycareadapter.secondarycareadapterapi 'Makes API Calls To'
     webApp -> nandm 'Makes API Calls To'
     webApp -> epsadapter 'Makes API Calls To'
     webApp -> utiladapter 'Makes API Calls To'
@@ -596,7 +605,10 @@ For example; if the practice stipulates that the maximum number of appointments 
     }
     pdsadapter -> pdsfhirapiget 'GET Patient'
     pdsadapter -> servicesearch 'Uses to search for NHS services'
-    secondarycareadapter -> wayfinder.aggregator.eventService 'Calls to get secondary care service details for user.' { technology 'OAuth 2.0 Token Exchange'}
+    secondarycareadapter.secondarycareadapterlogic -> wayfinder.aggregator.eventService.eventServiceAPI {
+      description  'Calls to get secondary care service details for user.'
+      technology 'OAuth 2.0 Token Exchange'
+    }
     epsadapter -> pfps 'Calls to get prescription details for user.'
     odsservice -> ordapi 'Makes API Call' {
       description 'Uses ORD API to look up ODS codes.'

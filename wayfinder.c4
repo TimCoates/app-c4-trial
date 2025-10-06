@@ -41,6 +41,7 @@ model {
     odsapi = system 'ODS API' {
         description 'Provides access to Organisation details'
         link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-fhir 'API Spec'
+        link https://directory.spineservices.nhs.uk/STU3/Organization/B86044 'Example response'
         style {
         color gray
         }

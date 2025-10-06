@@ -54,6 +54,7 @@ deployment {
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
         podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
+        podSCS = instanceOf nhsappservice.backend.secondarycareadapter 'SCS Adapter' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
         podEventLogger = instanceOf nhsappservice.backend.eventLogger 'Event Logger' { #AzDO }
         podSjr = instanceOf nhsappservice.backend.monolith.sjrapi 'SJR'
@@ -80,6 +81,7 @@ deployment {
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
         podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
+        podSCS = instanceOf nhsappservice.backend.secondarycareadapter 'SCS Adapter' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
         podEventLogger = instanceOf nhsappservice.backend.eventLogger 'Event Logger' { #AzDO }
         podSjr = instanceOf nhsappservice.backend.monolith.sjrapi 'SJR'
@@ -108,6 +110,7 @@ deployment {
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
         podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
+        podSCS = instanceOf nhsappservice.backend.secondarycareadapter 'SCS Adapter' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
         podEventLogger = instanceOf nhsappservice.backend.eventLogger 'Event Logger' { #AzDO }
         podSjr = instanceOf nhsappservice.backend.monolith.sjrapi 'SJR'

@@ -155,6 +155,11 @@ dynamic view oauth {
     include *
   }
 
+  view SCS of nhsappservice.backend.secondarycareadapter {
+    title '03 Backend / 05 Secondary Care Adapter'
+    include *
+  }
+
   view PDS of pds {
     title '04 External Systems / 01 PDS'
     include pds, pds.pdsdatabase,pds.pdshl7v3api, pds.pdsdatabase, pds.pdsfhirapi, pds.pdsfhirapi.pdsfhirapiget, pds.pdsfhirapi.pdsfhirapipatch
