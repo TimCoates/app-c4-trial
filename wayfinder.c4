@@ -1,8 +1,16 @@
 specification {
     tag PEP
+    tag TokenExchange
     element PEP {
+
     #PEP
     notation "Patient Engagement Platform"
+    notation "mTLS"
+    notation "OIDC"
+    notation "MFA"
+    notation "API Key"
+    notation "OAuth 2.0 Client Credentials"
+    notation "OAuth 2.0 Token Exchange"
     style {
         shape rectangle
         color gray
@@ -48,6 +56,10 @@ model {
             style {
                 color gray
             }
+
+            apimProxy = container 'API Proxy' {
+                icon gcp:apigee-api-platform
+            }
         
             recordService = container 'Record Service' {
                 description 'Service to identify which Services have Secondary Care records for a given patient'
@@ -90,6 +102,19 @@ model {
 
     }
 
+    apimProxy -> eventService.eventServiceAPI 'Get Patient Info Data' {
+        #TokenExchange
+        description '''
+        Gets:
+
+        - Referral data
+        - Waiting List data* Documents
+        - Questionnaires
+        - PIFU data
+        
+        for a given patient
+        '''
+    }
     eventServiceAPI -> recordServiceAPI 'Uses'
     eventService -> odsapi 'Lookup Organisation details' { technology 'Not Authenticated' }
     recordServiceAPI -> recordServiceDB 'Reads from\nWrites to'
@@ -127,6 +152,7 @@ model {
 }
 
 views 'Wayfinder' {
+    
     view wfindex of wayfinder {
         title '01 Overview'
         description 'An initial very high level diagram, showing how Wayfinder is structured.'
