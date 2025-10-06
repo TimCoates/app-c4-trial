@@ -150,6 +150,8 @@ model {
         secondarycareadapterapi = component 'Secondary Care Adapter API' {
           description '''
           `GET /v1/SecondaryCare/summary`
+          
+          `POST /v1/SecondaryCareReporting`
           '''
           style { icon tech:csharp }
         }
