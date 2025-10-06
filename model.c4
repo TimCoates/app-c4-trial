@@ -101,6 +101,9 @@ model {
 
         pfsapi = container 'PFS API' {
           description 'Handles interactions with PFS Services'
+          link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker/NHSOnline.Backend.PfsApi 'GitHub source code'
+          link https://github.com/NHSDigital/nhsapp/blob/3faa38effc8d6afa89d29763185bc841fca67504/backendworker/README.md 'README.md'
+          link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/583842081/NHS+PFS+-+API+Design#NHSPFSAPIDesign-PFSMonolith 'Confluence description'
           style {
             icon tech:csharp
           }
@@ -146,9 +149,28 @@ model {
 
       gpconnectadapter = container 'GP Connect Adapter' {
         description 'Handles communication with the GP Connect services.'
+        link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter 'GitHub code'
         style {
           icon tech:csharp
         }
+        gpconnectadapterLogic = component {
+          title 'GP Connect Adapter Logic'
+          description 'Logic in GP Connect Adapter'
+          technology 'C# DotNet'
+          style {
+            icon tech:csharp
+          }
+        }
+        gpconnectadapterAPI = component {
+          title 'GP Connect Adapter API'
+          description 'Enables the NHS App to access the GP Connect (Patient Facing) FHIR APIs'
+          technology 'C# DotNet'
+          link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter?tab=readme-ov-file#api-endpoints 'GitHub Readme file'
+          style {
+            icon tech:csharp
+          }
+        }
+        this.gpconnectadapterAPI -> this.gpconnectadapterLogic 'Passes on requests'
       }
 
       pdsadapter = container 'PDS Adapter' {
@@ -208,7 +230,12 @@ model {
     // Relationships
     webApp -> monolith 'Makes API Calls To'
     webApp -> pdsadapter 'Makes API Calls To'
-    webApp -> gpconnectadapter 'Makes API Calls To'
+    webApp -> gpconnectadapter.gpconnectadapterAPI 'Makes API Calls To' {
+      description '''
+      `POST /api/v1/AccessRecord`
+
+      '''
+    }
     webApp -> secondarycareadapter 'Makes API Calls To'
     webApp -> nandm 'Makes API Calls To'
     webApp -> epsadapter 'Makes API Calls To'
@@ -307,8 +334,13 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       technology 'IM1'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/626233388/Example+EMIS+TPP+IM1+API+Responses#ExampleEMIS%2BTPPIM1APIResponses-TPP 'Sample IM1 API responses'
     }
-    gpconnectadapter -> medicus 'Makes API Call' {
-      description 'Uses GP Connect PFS API to get patient records.'
+    gpconnectadapter.gpconnectadapterLogic -> medicus 'Makes API Call' {
+      description '''
+
+      Uses GP Connect PFS API to get patient records.
+      
+      `POST /Patient/$gpc.getstructuredrecord`
+      '''
       technology 'GP Connect'
       link https://digital.nhs.uk/developer/api-catalogue/gp-connect-patient-facing-access-record-fhir 'API documentation'
     }
