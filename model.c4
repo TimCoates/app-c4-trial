@@ -24,6 +24,7 @@ model {
   nhsappservice = system 'NHS App Service' {
     description 'Allows users to access a range of NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
+    link https://github.com/TimCoates/app-c4-trial/blob/main/test.mermaid 'Example link how we can link to a Sequence Diagram'
 
     webApp = container 'Web version of the NHS App' {
       description 'NHS App as viewed in a web browser.'
