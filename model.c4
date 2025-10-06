@@ -418,6 +418,7 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
   servicesearch = system 'Service Search' {
     description 'Provides search functionality for NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/8YfLB 'Confluence space'
+    link https://developer.api.nhs.uk/nhs-api/documentation/service-search-organisations-2 'Service description'
     style {
       icon tech:csharp
       color gray
@@ -605,7 +606,14 @@ For example; if the practice stipulates that the maximum number of appointments 
     login -> pdsfhirapipatch 'Uses to update user details: PATCH /Patient/{id}'  {
       technology 'REST FHIR API over HTTPS'
     }
-    pdsadapter -> pdsfhirapiget 'GET Patient'
+    pdsadapter -> pdsfhirapiget 'GET Patient' {
+      description '''
+      Use this endpoint to get patient details from PDS for a given NHS number.
+
+      `GET /Patient/{id}`
+      '''
+      link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
+    }
     pdsadapter -> servicesearch 'Uses to search for NHS services'
     secondarycareadapter.secondarycareadapterlogic -> wayfinder.aggregator.eventService.eventServiceAPI {
       description  'Calls to get secondary care service details for user.'
