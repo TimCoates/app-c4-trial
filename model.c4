@@ -263,12 +263,12 @@ model {
 
     pfsapi -> sjrapi 'Makes API Calls To'
 
-    iosapp -> sessionapi 'Uses for session management' {
+    iosapp -> nhsappservice.backend.monolith.sessionapi 'Uses for session management' {
       description 'POST /v1/session and GET /v1/session'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
       technology 'REST API over HTTPS'
     }
-    androidapp -> sessionapi 'Uses for session management' {
+    androidapp -> nhsappservice.backend.monolith.sessionapi 'Uses for session management' {
       description 'POST /v1/session and GET /v1/session'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
       technology 'REST API over HTTPS'
