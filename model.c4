@@ -407,6 +407,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
 
     component pdshl7v3api 'PDS HL7v3 API' {
       description 'The PDS HL7v3 API provides access to patient demographic details stored in PDS.'
+      link https://data.developer.nhs.uk/dms/mim/6.3.01/Index.htm 'MIM 6.3.01'
+      link https://digital.nhs.uk/developer/guides-and-documentation/message-implementation-manuals 'MIM index' 
       style {
         color gray
       }
@@ -435,7 +437,7 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
-  pfps = system 'Patient Facing Prescription Service' {
+  pfps = system 'Prescriptions for Patients FHIR API' {
     description 'Provides access to patient prescriptions.'
     link https://nhsd-confluence.digital.nhs.uk/x/coRhQ 'Confluence space'
     style {
@@ -620,9 +622,19 @@ For example; if the practice stipulates that the maximum number of appointments 
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'
     }
-    epsadapter -> pfps 'Calls to get prescription details for user.'
-    odsservice -> ordapi 'Makes API Call' {
-      description 'Uses ORD API to look up ODS codes.'
+    epsadapter -> pfps 'Calls to get prescription details for user.' {
+      description '''
+      Calls the Prescriptions for Patients FHIR API
+
+      `GET /Bundle`
+      '''
+    }
+    odsservice -> ordapi 'Gets Organisation details' {
+      description '''
+      Uses ODS code to look up Organisation details.
+
+      `GET /ORD/2-0-0/organisations/{ODS Code}`
+      '''
       link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-ord 'API documentation'
     }
 
