@@ -28,7 +28,7 @@ model {
       icon ./NHS_Icon.png
     }
     description 'Allows users to access a range of NHS services.'
-    link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/c5e39153-6f05-f011-af04-04d3b0c2d3c2/explore 'Object in Horizzon'
+    link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/9de39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Horizzon'
     link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
     link https://github.com/TimCoates/app-c4-trial/blob/main/test.mermaid 'Example link how we can link to a Sequence Diagram'
 
