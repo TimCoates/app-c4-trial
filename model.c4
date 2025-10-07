@@ -17,6 +17,7 @@ model {
     description 'A user of the NHS App.'
     style {
       shape person
+      icon ./Patient.png
     }
   }
 
