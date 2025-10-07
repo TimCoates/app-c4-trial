@@ -89,6 +89,37 @@ model {
         }
         iosapplogic -> ioswebview 'The iOS native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
       }
+      
+    }
+
+    NativeApp.androidapp.androidapplogic -> backend.sessionapi {
+      title 'Creates and gets session'
+      description '''
+      To create a session, calls:
+      
+      `POST /v1/session`
+
+      To get a session, calls:
+
+      `GET /v1/session`
+      '''
+      technology 'REST'
+      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
+    }
+
+    NativeApp.iosapp.iosapplogic -> backend.sessionapi {
+      title 'Creates and gets session'
+      description '''
+      To create a session, calls:
+      
+      `POST /v1/session`
+
+      To get a session, calls:
+
+      `GET /v1/session`
+      '''
+      technology 'REST'
+      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
     }
 
     backend = container 'Backend' {
@@ -277,16 +308,6 @@ model {
 
     pfsapi -> sjrapi 'Makes API Calls To'
 
-    iosapp -> nhsappservice.backend.monolith.sessionapi 'Uses for session management' {
-      description 'POST /v1/session and GET /v1/session'
-      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
-      technology 'REST API over HTTPS'
-    }
-    androidapp -> nhsappservice.backend.monolith.sessionapi 'Uses for session management' {
-      description 'POST /v1/session and GET /v1/session'
-      link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
-      technology 'REST API over HTTPS'
-    }
     androidwebview -> webApp 'Hosts'
     ioswebview -> webApp 'Hosts'
 
