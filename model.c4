@@ -22,6 +22,10 @@ model {
 
   // NHS App System
   nhsappservice = system 'NHS App Service' {
+
+    style {
+      icon ./NHS_Icon.png
+    }
     description 'Allows users to access a range of NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
     link https://github.com/TimCoates/app-c4-trial/blob/main/test.mermaid 'Example link how we can link to a Sequence Diagram'
@@ -34,6 +38,10 @@ model {
 
     NativeApp = container 'Native App' {
       link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/97e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
+
+      style {
+        icon ./NHS_Icon.png
+      }
 
       androidapp = container 'Native Android App' {
         description 'Native Android App that allows users to access a range of NHS services.'
@@ -84,6 +92,10 @@ model {
 
     backend = container 'Backend' {
       description 'A collection of components that handle API requests from the Native App and Web App, and communicate with external services.'
+
+      style {
+        icon ./NHS_Icon.png
+      }
 
       monolith = container 'App backend monolith' {
         description 'Handles App backend calls.'
@@ -385,13 +397,15 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       }
     }
 
+
     component pdsfhirapi 'PDS FHIR API' {
       description 'The PDS FHIR API provides access to patient demographic details stored in PDS.'
       link https://digital.nhs.uk/services/personal-demographics-service/pds-fhir-api 'Public pages'
       style {
-        icon tech:amazon-web-services
+        icon gcp:apigee-api-platform
         color gray
       }
+
 
       pdsfhirapiget = component 'Get patient details: GET /Patient/{id}' {
         description 'Use this endpoint to get patient details from PDS for a given NHS number. You cannot get a patients related people details, use the RelatedPerson endpoint instead.'
@@ -603,19 +617,33 @@ For example; if the practice stipulates that the maximum number of appointments 
     }
     backend -> login 'Uses to get user identity'
     NativeApp -> login 'Uses to get authenticate users'
-    login -> pdsfhirapiget 'Uses to get user details: GET /Patient/{id}' {
-      technology 'REST FHIR API over HTTPS'
+    login -> pdsfhirapiget 'Get user details' {
+      description '''
+      Uses to get user details:
+      
+      `GET /Patient/{id}`
+      '''
+      technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
-    login -> pdsfhirapipatch 'Uses to update user details: PATCH /Patient/{id}'  {
-      technology 'REST FHIR API over HTTPS'
+    login -> pdsfhirapipatch 'Update user details' {
+      description '''
+      Use this endpoint to get patient details from PDS for a given NHS number.
+      This is used in particular to get their P1 Nominated Pharmacy ODS code.
+
+      `PATCH /Patient/{id}`
+      '''
+      link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
+      technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
     pdsadapter -> pdsfhirapiget 'GET Patient' {
       description '''
       Use this endpoint to get patient details from PDS for a given NHS number.
+      This is used in particular to get their P1 Nominated Pharmacy ODS code.
 
       `GET /Patient/{id}`
       '''
       link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
+      technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
     pdsadapter -> servicesearch 'Uses to search for NHS services'
     secondarycareadapter.secondarycareadapterlogic -> wayfinder.aggregator.eventService.eventServiceAPI {
