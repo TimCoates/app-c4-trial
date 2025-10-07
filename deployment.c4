@@ -50,7 +50,7 @@ deployment {
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
-        podUtil = instanceOf nhsappservice.backend.utiladapter 'Util Adapter' { #AzDO }
+        podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
         podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
@@ -77,7 +77,7 @@ deployment {
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
-        podUtil = instanceOf nhsappservice.backend.utiladapter 'Util Adapter' { #AzDO }
+        podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
         podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
@@ -106,7 +106,7 @@ deployment {
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
-        podUtil = instanceOf nhsappservice.backend.utiladapter 'Util Adapter' { #AzDO }
+        podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
         podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }

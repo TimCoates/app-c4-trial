@@ -28,6 +28,7 @@ model {
       icon ./NHS_Icon.png
     }
     description 'Allows users to access a range of NHS services.'
+    link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/c5e39153-6f05-f011-af04-04d3b0c2d3c2/explore 'Object in Horizzon'
     link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
     link https://github.com/TimCoates/app-c4-trial/blob/main/test.mermaid 'Example link how we can link to a Sequence Diagram'
 
@@ -268,19 +269,83 @@ model {
         }
       }
 
-      utiladapter = container 'Util Adapter' {
-        description 'TBC'
+      utilAdapter = container {
+        title 'Utility Adapter'
+        description '''
+        The NHS App Utility Adapter API contains a set of API Endpoints designed to provide standard utility services to the NHS App.
+        
+        That 'set' of endpoints is currently just one endpoint.
+        '''
         style {
           icon tech:csharp
+        }
+        utilAdapterEndpoint = component {
+          title 'Utility Adapter Endpoint'
+          description '''
+          The NHS App Utility Adapter API contains a set of API Endpoints designed to provide standard utility services to the NHSApp.
+          The only endpoint it provides is to support logging.
+          
+          `POST api/v1/LogMessage`
+          '''
+          link https://github.com/NHSDigital/nhsapp-utilities-api-adapter 'GitHub repo'
+          link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/621850512/NHSApp+Utility+API+Adapter 'Confluence page'
+          technology 'C# DotNet'
+          style {
+            icon tech:csharp
+          }
+        }
+
+        utilAdapterLogic = component {
+          title 'Utility Adapter Logic'
+          description 'Processes utility requests.'
+          technology 'C# DotNet'
+          style {
+            icon tech:csharp
+          }
         }
       }
 
       eventLogger = container 'Event Logger' {
-        description 'TBC'
+        description 'The EventLogger solution is designed as a middleware component to the technical landscape and presents a common endpoint that will receive Audit/Analytics OR Logging/exception handle messages. Based on a type, the given messages will be sent to a designated queue for follow on processing. Normally this would be storage and analytics information processing.'
+        link https://github.com/NHSDigital/nhsapp-event-logger 'GitHub code'
+        link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/604902867/Event+Logger+-+User+Guide+-+Developer+Draft 'Confluence page'
+        link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/604902867/Event+Logger+-+User+Guide+-+Developer+Draft#EventLoggerUserGuide(DeveloperDraft)-Structure 'Structure in Confluence'
         style {
           icon tech:csharp
         }
+
+        component eventLoggerEndpoint 'Event Logger Endpoint' {
+          description '''
+          The Event Logger Endpoint receives log messages from other components.
+          
+          `POST /api/v1/AuditEvent`
+          '''
+          style {
+            icon tech:csharp
+          }
+        }
+
+        component eventLoggerLogic 'Event Logger Logic' {
+          description 'Processes log messages and routes them.'
+          style {
+            icon tech:csharp
+          }
+        }
       }
+    }
+
+    utilAdapter.utilAdapterEndpoint -> utilAdapter.utilAdapterLogic {
+      title 'Sends received message to be processed'
+    }
+
+    utilAdapter.utilAdapterLogic -> eventLogger.eventLoggerEndpoint 
+    {
+      title 'Sends log messages to'
+      description '''
+      Sends events To
+      
+      ``POST /api/v1/AuditEvent``
+      '''
     }
 
     // Relationships
@@ -295,7 +360,7 @@ model {
     webApp -> secondarycareadapter.secondarycareadapterapi 'Makes API Calls To'
     webApp -> nandm 'Makes API Calls To'
     webApp -> epsadapter 'Makes API Calls To'
-    webApp -> utiladapter 'Makes API Calls To'
+    webApp -> utilAdapter.utilAdapterEndpoint 'Makes API Calls To'
     webApp ->sessionapi 'Uses for session management' {
       description 'POST /v1/session and GET /v1/session'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
