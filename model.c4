@@ -63,6 +63,7 @@ model {
         androidwebview = webview 'Web View' {
           description 'An Andoid WebView component that renders web content within the app.'
           link https://developer.android.com/reference/android/webkit/WebView 'Android WebView documentation'
+          icon tech:chrome
         }
         androidapplogic -> androidwebview 'Drives' {
           description 'The Android native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
@@ -87,6 +88,7 @@ model {
         ioswebview = webview 'Web View' {
           description 'An iOS WebView control, that renders web content within the app.'
           link https://developer.apple.com/design/human-interface-guidelines/web-views 'Apple WebView documentation'
+          icon tech:apple-safari
         }
         iosapplogic -> ioswebview 'The iOS native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
       }
