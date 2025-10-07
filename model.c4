@@ -230,7 +230,7 @@ model {
         this.gpconnectadapterAPI -> this.gpconnectadapterLogic 'Passes on requests'
       }
 
-      pdsadapter = container 'PDS Adapter' {
+      pdsAdapter = container 'PDS Adapter' {
         description 'Communicates with PDS.'
         link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
         link https://github.com/NHSDigital/nhsapp-pds-api-adapter 'Code repository'
@@ -350,7 +350,7 @@ model {
 
     // Relationships
     webApp -> monolith 'Makes API Calls To'
-    webApp -> pdsadapter 'Makes API Calls To'
+    webApp -> pdsAdapter 'Makes API Calls To'
     webApp -> gpconnectadapter.gpconnectadapterAPI 'Makes API Calls To' {
       description '''
       `POST /api/v1/AccessRecord`
@@ -722,7 +722,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
       technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
-    pdsadapter -> pdsfhirapiget 'GET Patient' {
+    pdsAdapter -> pdsfhirapiget 'GET Patient' {
       description '''
       Use this endpoint to get patient details from PDS for a given NHS number.
       This is used in particular to get their P1 Nominated Pharmacy ODS code.
@@ -732,7 +732,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
       technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
-    pdsadapter -> servicesearch 'Uses to search for NHS services'
+    pdsAdapter -> servicesearch 'Uses to search for NHS services'
     secondarycareadapter.secondarycareadapterlogic -> wayfinder.aggregator.eventService.eventServiceAPI {
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'

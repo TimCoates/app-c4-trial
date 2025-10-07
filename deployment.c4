@@ -52,7 +52,7 @@ deployment {
         podIproxy = podAzDO 'iproxy'
         podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
-        podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
+        podPds = instanceOf nhsappservice.backend.pdsAdapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
         podSCS = instanceOf nhsappservice.backend.secondarycareadapter 'SCS Adapter' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
@@ -79,7 +79,7 @@ deployment {
         podIproxy = podAzDO 'iproxy'
         podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
-        podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
+        podPds = instanceOf nhsappservice.backend.pdsAdapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
         podSCS = instanceOf nhsappservice.backend.secondarycareadapter 'SCS Adapter' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
@@ -108,7 +108,7 @@ deployment {
         podIproxy = podAzDO 'iproxy'
         podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
         podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
-        podPds = instanceOf nhsappservice.backend.pdsadapter 'PDS Adapter' { #AzDO }
+        podPds = instanceOf nhsappservice.backend.pdsAdapter 'PDS Adapter' { #AzDO }
         podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
         podSCS = instanceOf nhsappservice.backend.secondarycareadapter 'SCS Adapter' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
