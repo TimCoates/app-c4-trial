@@ -9,6 +9,16 @@ specification {
       color muted
     }
   }
+
+  relationship Cookies {
+    color amber
+    line solid
+  }
+
+  relationship Bearer-Token {
+    color red
+    line solid
+  }
 }
 
 model {
@@ -95,7 +105,7 @@ model {
       
     }
 
-    NativeApp.androidapp.androidapplogic -> backend.sessionapi {
+    NativeApp.androidapp.androidapplogic -[Cookies]-> backend.sessionapi {
       title 'Creates and gets session'
       description '''
       To create a session, calls:
@@ -110,7 +120,7 @@ model {
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
     }
 
-    NativeApp.iosapp.iosapplogic -> backend.sessionapi {
+    NativeApp.iosapp.iosapplogic -[Cookies]-> backend.sessionapi {
       title 'Creates and gets session'
       description '''
       To create a session, calls:
@@ -134,20 +144,21 @@ model {
 
       monolith = container 'App backend monolith' {
         description 'Handles App backend calls.'
+        technology 'C# DotNet Kubernetes Pod'
         link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker 'Code repository'
         style {
           icon tech:csharp
           opacity 10%
         }
 
-        sjrapi = container 'SJR API' {
+        sjrapi = component 'SJR API' {
           description 'Handles retrieval of SJR'
           style {
             icon tech:csharp
           }
         }
 
-        pfsapi = container 'PFS API' {
+        pfsapi = component 'PFS API' {
           description 'Handles interactions with PFS Services'
           link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker/NHSOnline.Backend.PfsApi 'GitHub source code'
           link https://github.com/NHSDigital/nhsapp/blob/3faa38effc8d6afa89d29763185bc841fca67504/backendworker/README.md 'README.md'
@@ -157,7 +168,7 @@ model {
           }
         }
 
-        sessionapi = container 'Session API' {
+        sessionapi = component 'Session API' {
           description 'Handles session management'
           style {
             icon tech:csharp
@@ -182,7 +193,7 @@ model {
 
         sessionapi -> sessions 'Reads from and writes to database.'
         sessionapi -> userinfodevice 'Reads from and writes to database.'
-
+        pfsapi -> sjrapi 'Makes API Calls To'
       }
 
       secondaryCareAdapterPod = container {
@@ -193,7 +204,7 @@ model {
           icon tech:kubernetes
         }
 
-        secondaryCareAdapterNGinx = container {
+        secondaryCareAdapterNGinx = component {
           title 'Secondary Care Adapter NGINX'
           description 'Sidecar container for the Secondary Care Adapter.'
           style {
@@ -226,49 +237,113 @@ model {
         secondaryCareAdapterNGinx -> secondaryCareAdapter
       }
 
-      gpconnectadapter = container 'GP Connect Adapter' {
-        description 'Handles communication with the GP Connect services.'
-        link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter 'GitHub code'
-        style {
-          icon tech:csharp
+      gpConnectAdapterPod = container {
+        title 'GP Connect Adapter Pod'
+        description 'Handles communication with GP Connect services.'
+        icon tech:kubernetes
+        technology 'Kubernetes'
+
+        gpConnectAdapterNGinx = component {
+          title 'GP Connect Adapter NGINX'
+          description 'Sidecar container for the GP Connect Adapter.'
+          style {
+            icon tech:nginx
+            color slate
+          }
         }
-        gpconnectadapterLogic = component {
-          title 'GP Connect Adapter Logic'
-          description 'Logic in GP Connect Adapter'
-          technology 'C# DotNet'
+
+        gpConnectAdapter = container 'GP Connect Adapter' {
+          description 'Handles communication with the GP Connect services.'
+          link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter 'GitHub code'
+          technology 'C# DotNet Kubernetes Pod'
           style {
             icon tech:csharp
           }
-        }
-        gpconnectadapterAPI = component {
-          title 'GP Connect Adapter API'
-          description 'Enables the NHS App to access the GP Connect (Patient Facing) FHIR APIs'
-          technology 'C# DotNet'
-          link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter?tab=readme-ov-file#api-endpoints 'GitHub Readme file'
-          style {
-            icon tech:csharp
+
+          gpconnectadapterLogic = component {
+            title 'GP Connect Adapter Logic'
+            description 'Logic in GP Connect Adapter'
+            technology 'C# DotNet'
+            style {
+              icon tech:csharp
+            }
           }
+          gpconnectadapterAPI = component {
+            title 'GP Connect Adapter API'
+            description 'Enables the NHS App to access the GP Connect (Patient Facing) FHIR APIs'
+            technology 'C# DotNet'
+            link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter?tab=readme-ov-file#api-endpoints 'GitHub Readme file'
+            style {
+              icon tech:csharp
+            }
+          }
+          gpConnectAdapter.gpconnectadapterAPI -> gpConnectAdapter.gpconnectadapterLogic 'Passes on requests'
         }
-        this.gpconnectadapterAPI -> this.gpconnectadapterLogic 'Passes on requests'
+
+        gpConnectAdapterNGinx -> gpConnectAdapter.gpconnectadapterAPI
       }
 
-      pdsAdapter = container 'PDS Adapter' {
-        description 'Communicates with PDS.'
-        link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
-        link https://github.com/NHSDigital/nhsapp-pds-api-adapter 'Code repository'
-
+      pdsAdapterPod = container {
+        title 'PDS Adapter Pod'
+        description 'Handles communication with PDS.'
+        technology 'Kubernetes'
         style {
-          icon tech:csharp
+          icon tech:kubernetes
         }
+
+        pdsAdapterNGinx = component {
+          title 'PDS Adapter NGINX'
+          description 'Sidecar container for the PDS Adapter.'
+          style {
+            icon tech:nginx
+            color slate
+          }
+        }
+
+        pdsAdapter = container 'PDS Adapter' {
+          description 'Communicates with PDS.'
+          technology 'C# DotNet Kubernetes Pod'
+          link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
+          link https://github.com/NHSDigital/nhsapp-pds-api-adapter 'Code repository'
+
+          style {
+            icon tech:csharp
+          }
+
+          pdsAdapterAPI = component {
+            title '''
+            PDS Adapter API
+
+            `GET /v1/patient/nominated-pharmacy`
+            `POST /v1/patient/nominated-pharmacy`
+
+            '''
+            description 'API for the PDS API'
+          }
+
+          pdsAdapterLogic = component {
+            title 'PDS Adapter Logic'
+            description 'Logic in the PDS Adapter'
+            technology 'C# DotNet'
+            style {
+              icon tech:csharp
+            }
+          }
+          pdsAdapterAPI -> pdsAdapterLogic 'Passes on requests'
+        }
+
+        pdsAdapterNGinx -> pdsAdapter.pdsAdapterAPI
+
       }
 
       nandm = container 'Notifications and Messaging' {
         description 'Handles Patient Messages and Notifications.'
+        technology 'C# DotNet Azure Function Apps'
         style {
-          icon tech:csharp
+          icon azure:function-apps
         }
 
-        odsservice = component 'ODS Service' {
+        odsservice = container 'ODS Service' {
           description 'Handles ODS code lookups.'
           style {
             icon tech:csharp
@@ -284,47 +359,104 @@ model {
         }
       }
 
-      epsadapter = container 'EPS Adapter' {
-        description 'Handles calls to EPS'
-        style {
-          icon tech:csharp
+      epsAdapterPod = container {
+        title 'EPS Adapter Pod'
+        description 'Handles communication with the EPS services.'
+        icon tech:kubernetes
+        technology 'Kubernetes'
+
+        epsAdapterNGinx = component {
+          title 'EPS Adapter NGINX'
+          description 'Sidecar container for the EPS Adapter.'
+        }
+
+        epsAdapter = container 'EPS Adapter' {
+          description 'Handles calls to EPS'
+          technology 'C# DotNet Kubernetes Pod'
+          style {
+            icon tech:csharp
+          }
+
+          epsAdapterLogic = component {
+            title 'EPS Adapter Logic'
+            description 'Logic in the EPS Adapter'
+            technology 'C# DotNet'
+            style {
+              icon tech:csharp
+            }
+          }
+          epsAdapterAPI = component {
+            title 'EPS Adapter API'
+            description '''
+            Enables the NHS App to access the EPS related APIs
+            
+            `GET /api/v1/Prescriptions`
+
+            '''
+            technology 'C# DotNet'
+            link https://github.com/NHSDigital/nhsapp-eps-api-adapter 'GitHub Repo'
+            style {
+              icon tech:csharp
+            }
+          }
+          epsAdapter.epsAdapterAPI -> epsAdapter.epsAdapterLogic 'Passes on requests'
         }
       }
 
-      utilAdapter = container {
-        title 'Utility Adapter'
-        description '''
-        The NHS App Utility Adapter API contains a set of API Endpoints designed to provide standard utility services to the NHS App.
-        
-        That 'set' of endpoints is currently just one endpoint.
-        '''
+      utilAdapterPod = container {
+        title 'Utility Adapter Pod'
+        description 'Provides Utility services.'
+        technology 'Kubernetes'
         style {
-          icon tech:csharp
+          icon tech:kubernetes
         }
-        utilAdapterEndpoint = component {
-          title 'Utility Adapter Endpoint'
-          description '''
-          The NHS App Utility Adapter API contains a set of API Endpoints designed to provide standard utility services to the NHSApp.
-          The only endpoint it provides is to support logging.
-          
-          `POST api/v1/LogMessage`
-          '''
-          link https://github.com/NHSDigital/nhsapp-utilities-api-adapter 'GitHub repo'
-          link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/621850512/NHSApp+Utility+API+Adapter 'Confluence page'
-          technology 'C# DotNet'
+
+        utilAdapterNGinx = component {
+          title 'Utility Adapter NGinx'
+          description 'Sidecar container for the Utility Adapter.'
           style {
-            icon tech:csharp
+            icon tech:nginx
+            color slate
           }
         }
 
-        utilAdapterLogic = component {
-          title 'Utility Adapter Logic'
-          description 'Processes utility requests.'
-          technology 'C# DotNet'
+        utilAdapter = container {
+          title 'Utility Adapter'
+          description '''
+          The NHS App Utility Adapter API contains a set of API Endpoints designed to provide standard utility services to the NHS App.
+          
+          That 'set' of endpoints is currently just one endpoint.
+          '''
+          technology 'C# DotNet Kubernetes Pod'
           style {
             icon tech:csharp
           }
+          utilAdapterEndpoint = component {
+            title 'Utility Adapter Endpoint'
+            description '''
+            The NHS App Utility Adapter API contains a set of API Endpoints designed to provide standard utility services to the NHSApp.
+            The only endpoint it provides is to support logging.
+            
+            `POST api/v1/LogMessage`
+            '''
+            link https://github.com/NHSDigital/nhsapp-utilities-api-adapter 'GitHub repo'
+            link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/621850512/NHSApp+Utility+API+Adapter 'Confluence page'
+            technology 'C# DotNet'
+            style {
+              icon tech:csharp
+            }
+          }
+
+          utilAdapterLogic = component {
+            title 'Utility Adapter Logic'
+            description 'Processes utility requests.'
+            technology 'C# DotNet'
+            style {
+              icon tech:csharp
+            }
+          }
         }
+        utilAdapterNGinx -> utilAdapter.utilAdapterEndpoint
       }
 
       eventLogger = container 'Event Logger' {
@@ -371,103 +503,117 @@ model {
     }
 
     // Relationships
-    webApp -> monolith 'Makes API Calls To'
-    webApp -> pdsAdapter 'Makes API Calls To'
-    webApp -> gpconnectadapter.gpconnectadapterAPI 'Makes API Calls To' {
+    webApp -[Cookies]-> monolith 'Makes API Calls To' {
+      technology 'Secured by Cookies over HTTPS'
+    }
+    webApp -[Cookies]-> pdsAdapterPod 'Makes API Calls To' {
+      technology 'Secured by Cookies over HTTPS'
+    }
+    webApp -[Cookies]-> gpConnectAdapterPod.gpConnectAdapterNGinx 'Makes API Calls To' {
       description '''
+      
+      Makes calls to GP Connect using Cookies authentication
+      
       `POST /api/v1/AccessRecord`
 
       '''
     }
-    webApp -> secondaryCareAdapterPod.secondaryCareAdapterNGinx 'Makes API Calls To'
-    webApp -> nandm 'Makes API Calls To'
-    webApp -> epsadapter 'Makes API Calls To'
-    webApp -> utilAdapter.utilAdapterEndpoint 'Makes API Calls To'
-    webApp ->sessionapi 'Uses for session management' {
+    webApp -[Cookies]-> secondaryCareAdapterPod.secondaryCareAdapterNGinx 'Makes API Calls To' {
+      technology 'Secured by Cookies over HTTPS'
+    }
+    webApp -[Bearer-Token]-> nandm 'Makes API Calls To' {
+      description 'Makes calls to N&M using Bearer Token authentication'
+      technology 'Secured by Bearer Token over HTTPS'
+    }
+    webApp -[Cookies]-> epsAdapterPod.epsAdapterNGinx 'Makes API Calls To' {
+      technology 'Secured by Cookies over HTTPS'
+    }
+    webApp -[Cookies]-> utilAdapterPod.utilAdapterNGinx 'Makes API Calls To' {
+      technology 'Secured by Cookies over HTTPS'
+    }
+    webApp -[Cookies]-> sessionapi 'Used for session management' {
       description 'POST /v1/session and GET /v1/session'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
-      technology 'REST API over HTTPS'
+      technology 'REST API Secured by Cookies over HTTPS'
     }
-    webApp -> pfsapi 'Makes API Calls To' {
+    webApp -[Cookies]-> pfsapi 'Makes API Calls To' {
       description 'Makes API Calls To'
-      technology 'REST API over HTTPS'
+      technology 'REST API Secured by Cookies over HTTPS'
     }
 
-    pfsapi -> sjrapi 'Makes API Calls To'
-
-    androidwebview -> webApp 'Hosts'
-    ioswebview -> webApp 'Hosts'
+    NativeApp.androidapp.androidwebview -> webApp 'Hosts'
+    NativeApp.iosapp.ioswebview -> webApp 'Hosts'
 
     // Here are all the links to EMIS using IM1
-    pfsapi -> optum.emisim1pfsappointmentslots 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsappointmentslots 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get available appointment slots'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsappointments 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsappointments 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to manage appointments'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfspatientcommsrecipients 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfspatientcommsrecipients 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to communicate with patients'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfspatientcommsmessages 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfspatientcommsmessages 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to communicate with patients'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecorddemographics 'Makes API Call, GET' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecorddemographics 'Makes API Call, GET' {
       description 'GET /demographics\nReturns the known demographic details (including patient identifiers such as NHS or CHI number) of the patient record specified. To change this information please see the /demographicsrequest resource.'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecorddemographicsrequests 'Makes API Calls, GET, POST, DELETE' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecorddemographicsrequests 'Makes API Calls, GET, POST, DELETE' {
       description 'GET /demographicsrequest\n POST /demographicsrequest\n DELETE /demographicsrequest\nA demographics request is any update to the patient record’s demographic details that is still awaiting review and acceptance by a user of the clinical system at the practice. Updates to the patient record demographics must always be reviewed before they can be made a permanent modification to the record.'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecorddocuments 'Makes API Calls, GET' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecorddocuments 'Makes API Calls, GET' {
       description 'GET /documents/:documentGuid\nRetrieves the document content that has been filed in the patient record. Documents are embedded within HTML mark-up, compressed using GZIP and then encoded in base64.
 A list of available document guids can be retrieved from the /record resource when specifying the item type of “Documents”. The /record resource also contains the document metadata such as the page length, file-size and file extension. 
 EMIS Web is capable of storing multiple document formats, and the API will return the raw data content. Please ensure that it is converted into a viewable format before displaying it to your user.'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecordrecords 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecordrecords 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get patient records'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecordprescriptioncourses 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecordprescriptioncourses 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get patient prescription courses'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecordprescriptionpharmacies 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecordprescriptionpharmacies 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get patient pharmacies'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsgetrecordprescriptionrequests 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsgetrecordprescriptionrequests 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get prescription requests'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsusersessionsme 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsusersessionsme 'Makes API Call' {
       description 'GET /me\nPOST/me\nThe me resource relates directly to the ROSU and their account in the clinical system. This resource has no interaction with any patient record. It also controls linking the subsidiary user to the ROSU in EMIS Web.'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsusersessionspractices 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsusersessionspractices 'Makes API Call' {
       description 'GET /practices\nGET /practices/:nationalPracticeCode/meta\nGET /practices/:nationalPracticeCode/settings\nReturns our recorded details of the specified Practice by their postcode. This call can be used in an attempt to verify if a Practice is an EMIS customer.'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsusersessionssessions 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsusersessionssessions 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get...'
       technology 'IM1'
     }
-    pfsapi -> optum.emisim1pfsusersessionsusers 'Makes API Call' {
+    monolith.pfsapi -> optum.emisim1pfsusersessionsusers 'Makes API Call' {
       description 'Uses optum (EMIS Web) IM1 APIs to get...'
       technology 'IM1'
     }
 
-    pfsapi -> tpps1 'Makes API Call' {
+    monolith.pfsapi -> tpps1 'Makes API Call' {
       description 'Uses TPP IM1 APIs to get patient records'
       technology 'IM1'
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/626233388/Example+EMIS+TPP+IM1+API+Responses#ExampleEMIS%2BTPPIM1APIResponses-TPP 'Sample IM1 API responses'
     }
-    gpconnectadapter.gpconnectadapterLogic -> medicus 'Makes API Call' {
+    gpConnectAdapter.gpconnectadapterLogic -> medicus 'Makes API Call' {
       description '''
 
       Uses GP Connect PFS API to get patient records.
@@ -759,7 +905,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'
     }
-    epsadapter -> pfps 'Calls to get prescription details for user.' {
+    epsAdapter -> pfps 'Calls to get prescription details for user.' {
       description '''
       Calls the Prescriptions for Patients FHIR API
 

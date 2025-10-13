@@ -50,11 +50,11 @@ deployment {
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
-        podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
-        podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
-        podPds = instanceOf nhsappservice.backend.pdsAdapter 'PDS Adapter' { #AzDO }
-        podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
-        podSCS = instanceOf nhsappservice.backend.secondaryCareAdapter 'SCS Adapter' { #AzDO }
+        podUtil = instanceOf nhsappservice.backend.utilAdapterPod 'Utility Adapter' { #AzDO }
+        podGpc = instanceOf nhsappservice.backend.gpConnectAdapterPod 'GP Connect Adapter Pod' { #AzDO }
+        podPds = instanceOf nhsappservice.backend.pdsAdapterPod 'PDS Adapter' { #AzDO }
+        podEps = instanceOf nhsappservice.backend.epsAdapterPod 'EPS Adapter Pod' { #AzDO }
+        podSCS = instanceOf nhsappservice.backend.secondaryCareAdapterPod 'SCS Adapter Pod' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
         podEventLogger = instanceOf nhsappservice.backend.eventLogger 'Event Logger' { #AzDO }
         podSjr = instanceOf nhsappservice.backend.monolith.sjrapi 'SJR'
@@ -77,11 +77,11 @@ deployment {
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
-        podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
-        podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
-        podPds = instanceOf nhsappservice.backend.pdsAdapter 'PDS Adapter' { #AzDO }
-        podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
-        podSCS = instanceOf nhsappservice.backend.secondaryCareAdapter 'SCS Adapter' { #AzDO }
+        podUtil = instanceOf nhsappservice.backend.utilAdapterPod 'Utility Adapter' { #AzDO }
+        podGpc = instanceOf nhsappservice.backend.gpConnectAdapterPod 'GP Connect Adapter Pod' { #AzDO }
+        podPds = instanceOf nhsappservice.backend.pdsAdapterPod 'PDS Adapter' { #AzDO }
+        podEps = instanceOf nhsappservice.backend.epsAdapterPod 'EPS Adapter Pod' { #AzDO }
+        podSCS = instanceOf nhsappservice.backend.secondaryCareAdapterPod 'SCS Adapter Pod' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
         podEventLogger = instanceOf nhsappservice.backend.eventLogger 'Event Logger' { #AzDO }
         podSjr = instanceOf nhsappservice.backend.monolith.sjrapi 'SJR'
@@ -106,11 +106,11 @@ deployment {
         podCSI = podBash 'CSI Driver'
 
         podIproxy = podAzDO 'iproxy'
-        podUtil = instanceOf nhsappservice.backend.utilAdapter 'Utility Adapter' { #AzDO }
-        podGpc = instanceOf nhsappservice.backend.gpconnectadapter 'GP Connect Adapter' { #AzDO }
-        podPds = instanceOf nhsappservice.backend.pdsAdapter 'PDS Adapter' { #AzDO }
-        podEps = instanceOf nhsappservice.backend.epsadapter 'EPS Adapter' { #AzDO }
-        podSCS = instanceOf nhsappservice.backend.secondaryCareAdapter 'SCS Adapter' { #AzDO }
+        podUtil = instanceOf nhsappservice.backend.utilAdapterPod 'Utility Adapter' { #AzDO }
+        podGpc = instanceOf nhsappservice.backend.gpConnectAdapterPod 'GP Connect Adapter Pod' { #AzDO }
+        podPds = instanceOf nhsappservice.backend.pdsAdapterPod 'PDS Adapter' { #AzDO }
+        podEps = instanceOf nhsappservice.backend.epsAdapterPod 'EPS Adapter Pod' { #AzDO }
+        podSCS = instanceOf nhsappservice.backend.secondaryCareAdapterPod 'SCS Adapter Pod' { #AzDO }
         podCid = podAzDO 'Citizen ID (NHS login)'
         podEventLogger = instanceOf nhsappservice.backend.eventLogger 'Event Logger' { #AzDO }
         podSjr = instanceOf nhsappservice.backend.monolith.sjrapi 'SJR'

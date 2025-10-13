@@ -152,7 +152,7 @@ dynamic view oauth {
     include *
   }
 
-  view GPC of nhsappservice.backend.gpconnectadapter {
+  view GPC of nhsappservice.backend.gpConnectAdapter {
     title '03 Backend / 04 GP Connect Adapter'
     include *
   }
