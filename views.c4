@@ -134,10 +134,12 @@ dynamic view oauth {
     include *
   }
 
+
   view Backend of nhsappservice.backend {
     title '03 Backend / 01 Backend'
     include *
-  }
+  	autoLayout TopBottom 383 32
+	}
 
   view Monolith of nhsappservice.backend.monolith {
     title '03 Backend / 02 Monolith'
@@ -155,7 +157,7 @@ dynamic view oauth {
     include *
   }
 
-  view SCS of nhsappservice.backend.secondarycareadapter {
+  view SCS of nhsappservice.backend.secondaryCareAdapterPod {
     title '03 Backend / 05 Secondary Care Adapter'
     include *
   }

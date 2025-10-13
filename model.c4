@@ -185,25 +185,45 @@ model {
 
       }
 
-      secondarycareadapter = container 'Secondary Care Adapter' {
-        description 'Handles communication with Wayfinder Patient Care Aggregator'
-        link https://nhsd-confluence.digital.nhs.uk/x/LUJSMQ 'Confluence page'
-        link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/827474477/NHSApp+Secondary+Care+API+Adapter#NHSAppSecondaryCareAPIAdapter-Flow 'Processing'
-        link https://github.com/NHSDigital/nhsapp-secondary-care-api-adapter 'GitHub repo'
-        style { icon tech:csharp }
-        secondarycareadapterlogic = component 'Secondary Care Adapter Logic' {
-          description 'Represents the compute/logic in the Secondary Care Adapter'
-          style { icon tech:csharp }
+      secondaryCareAdapterPod = container {
+        title 'Secondary Care Adapter Pod'
+        description 'Handles communication with the Wayfinder Patient Care Aggregator.'
+        technology 'Kubernetes'
+        style {
+          icon tech:kubernetes
         }
-        secondarycareadapterapi = component 'Secondary Care Adapter API' {
-          description '''
-          `GET /v1/SecondaryCare/summary`
-          
-          `POST /v1/SecondaryCareReporting`
-          '''
-          style { icon tech:csharp }
+
+        secondaryCareAdapterNGinx = container {
+          title 'Secondary Care Adapter NGINX'
+          description 'Sidecar container for the Secondary Care Adapter.'
+          style {
+            icon tech:nginx
+            color slate
+          }
         }
-        this.secondarycareadapterapi -> this.secondarycareadapterlogic 'Passes incoming requests'
+
+        secondaryCareAdapter = container 'Secondary Care Adapter' {
+          description 'Handles communication with Wayfinder Patient Care Aggregator'
+          link https://nhsd-confluence.digital.nhs.uk/x/LUJSMQ 'Confluence page'
+          link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/827474477/NHSApp+Secondary+Care+API+Adapter#NHSAppSecondaryCareAPIAdapter-Flow 'Processing'
+          link https://github.com/NHSDigital/nhsapp-secondary-care-api-adapter 'GitHub repo'
+          style { icon tech:csharp }
+          secondaryCareAdapterLogic = component 'Secondary Care Adapter Logic' {
+            description 'Represents the compute/logic in the Secondary Care Adapter'
+            style { icon tech:csharp }
+          }
+          secondaryCareAdapterAPI = component 'Secondary Care Adapter API' {
+            description '''
+            `GET /v1/SecondaryCare/summary`
+            
+            `POST /v1/SecondaryCareReporting`
+            '''
+            style { icon tech:csharp }
+          }
+          secondaryCareAdapter.secondaryCareAdapterAPI -> secondaryCareAdapter.secondaryCareAdapterLogic 'Passes incoming requests'
+        }
+
+        secondaryCareAdapterNGinx -> secondaryCareAdapter
       }
 
       gpconnectadapter = container 'GP Connect Adapter' {
@@ -359,7 +379,7 @@ model {
 
       '''
     }
-    webApp -> secondarycareadapter.secondarycareadapterapi 'Makes API Calls To'
+    webApp -> secondaryCareAdapterPod.secondaryCareAdapterNGinx 'Makes API Calls To'
     webApp -> nandm 'Makes API Calls To'
     webApp -> epsadapter 'Makes API Calls To'
     webApp -> utilAdapter.utilAdapterEndpoint 'Makes API Calls To'
@@ -735,7 +755,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
     pdsAdapter -> servicesearch 'Uses to search for NHS services'
-    secondarycareadapter.secondarycareadapterlogic -> wayfinder.aggregator.eventService.eventServiceAPI {
+    secondaryCareAdapter.secondaryCareAdapterLogic -> wayfinder.aggregator.eventService.eventServiceAPI {
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'
     }
