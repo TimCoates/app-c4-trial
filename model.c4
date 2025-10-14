@@ -486,6 +486,61 @@ model {
           }
         }
       }
+
+      pdmAdapterPod = container {
+        title 'PDM Adapter Kubernetes Pod'
+        description 'Adapter paired with an NGinx container to talk to PDM'
+
+        style {
+          icon tech:kubernetes
+          color red
+        }
+
+        pdmNGinx = component {
+          title 'NGinx sidecar for PDM Adapter'
+          style {
+            icon tech:nginx
+            color red
+          }
+        }
+
+        pdmAdapter = container {
+          title 'Container to talk to PDM'
+          technology 'C# DotNet'
+          style {
+            color red
+            icon tech:kubernetes
+          }
+
+          pdmAdapterAPI = component {
+            title ''
+            description '''
+            The PDM Adapter API contains a set of API Endpoints designed to provide access to data held in PDM.
+            
+            `GET /{resource}`
+            `POST /{resource}`
+            `GET /{resource}/{id}`
+            Etc
+            '''
+            style {
+              color red
+              icon tech:csharp
+            }
+          }
+
+          pdmAdapterLogic = component {
+            title 'Logic in the PDM Adapter'
+            style {
+              icon tech:csharp
+              color red
+            }
+          }
+
+          pdmAdapterAPI -> pdmAdapterLogic
+        }
+
+        pdmNGinx -> pdmAdapter.pdmAdapterAPI
+      }
     }
 
     utilAdapter.utilAdapterEndpoint -> utilAdapter.utilAdapterLogic {
@@ -506,7 +561,7 @@ model {
     webApp -[Cookies]-> monolith 'Makes API Calls To' {
       technology 'Secured by Cookies over HTTPS'
     }
-    webApp -[Cookies]-> pdsAdapterPod 'Makes API Calls To' {
+    webApp -[Cookies]-> pdsAdapterPod.pdsAdapterNGinx 'Makes API Calls To' {
       technology 'Secured by Cookies over HTTPS'
     }
     webApp -[Cookies]-> gpConnectAdapterPod.gpConnectAdapterNGinx 'Makes API Calls To' {
@@ -539,6 +594,9 @@ model {
     webApp -[Cookies]-> pfsapi 'Makes API Calls To' {
       description 'Makes API Calls To'
       technology 'REST API Secured by Cookies over HTTPS'
+    }
+    webApp -[Cookies]->pdmAdapterPod.pdmNGinx {
+      title 'Retrieves Any arbitrary FHIR resource'
     }
 
     NativeApp.androidapp.androidwebview -> webApp 'Hosts'
@@ -723,6 +781,17 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
+  pdm = system {
+    title 'PDM'
+    description 'The PDM (Patient Data Manager) system is used to store patient data.'
+    link https://nhsd-confluence.digital.nhs.uk/x/Xu9uNg 'Confluence space'
+    link https://digital.nhs.uk/developer/api-catalogue/patient-data-manager 'Public API spec'
+    style {
+      icon aws:health-lake
+      color red
+    }
+  }
+
   // Fully external systems
   GPSystems = system 'GP Systems' {
     description 'Systems used by General Practitioners (GPs) to manage patient records and appointments.'
@@ -890,7 +959,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
       technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
-    pdsAdapter -> pdsfhirapiget 'GET Patient' {
+    pdsAdapter.pdsAdapterLogic -> pdsfhirapiget 'GET Patient' {
       description '''
       Use this endpoint to get patient details from PDS for a given NHS number.
       This is used in particular to get their P1 Nominated Pharmacy ODS code.
@@ -900,12 +969,12 @@ For example; if the practice stipulates that the maximum number of appointments 
       link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
       technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
-    pdsAdapter -> servicesearch 'Uses to search for NHS services'
+    pdsAdapter.pdsAdapterLogic -> servicesearch 'Uses to search for NHS services'
     secondaryCareAdapter.secondaryCareAdapterLogic -> wayfinder.aggregator.eventService.eventServiceAPI {
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'
     }
-    epsAdapter -> pfps 'Calls to get prescription details for user.' {
+    epsAdapter.epsAdapterLogic -> pfps 'Calls to get prescription details for user.' {
       description '''
       Calls the Prescriptions for Patients FHIR API
 
@@ -919,6 +988,12 @@ For example; if the practice stipulates that the maximum number of appointments 
       `GET /ORD/2-0-0/organisations/{ODS Code}`
       '''
       link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-ord 'API documentation'
+    }
+
+    // Provisional for interacting with PDM
+    pdmAdapterPod.pdmAdapter.pdmAdapterLogic -> pdm {
+      title 'Fetches any FHIR Data from PDM'
+      technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
 
   }

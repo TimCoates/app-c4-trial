@@ -172,6 +172,13 @@ dynamic view oauth {
     include *
   }
 
+  view PDM of pdm {
+    title '04 External Systems / 03 PDM API'
+    include pdm,
+    nhsappservice.pdmAdapterPod,
+    nhsappservice.pdmAdapterPod.** 
+  }
+
   view GPSystems of GPSystems {
     title '04 External Systems / 01 GP Systems / 00 Overview'
     include *
