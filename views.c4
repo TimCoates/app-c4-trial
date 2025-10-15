@@ -178,8 +178,17 @@ dynamic view oauth {
     include *
   }
 
+  view eps of nhsappservice.epsAdapterPod {
+    title '04 External Systems / 03 EPS API'
+    include nhsappservice.webApp,
+    epsAdapterPod,
+    epsAdapterPod.epsAdapterNGinx,
+    epsAdapterPod.epsAdapter,
+    epsAdapterPod.epsAdapter.**
+  }
+
   view PDM of pdm {
-    title '04 External Systems / 03 PDM API'
+    title '04 External Systems / 04 PDM API'
     include pdm,
     nhsappservice.pdmAdapterPod,
     nhsappservice.pdmAdapterPod.**,

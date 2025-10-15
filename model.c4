@@ -158,8 +158,26 @@ model {
           }
         }
 
-        pfsapi = component 'PFS API' {
-          description 'Handles interactions with PFS Services'
+        pfsapi = component {
+          title 'PFS API'
+          description '''
+          Handles interactions with PFS and other backend App services
+
+          Served at `https://api.nhsapp.service.nhs.uk/v1`
+
+          + `GET /session`
+          + `POST /session`
+          + `DELETE /session`
+          + `GET /patient/prescriptions?fromDate=YYYY-MM-DDTHH:MM:SS+01:00`
+          + `POST /patient/asserted-login-identity`
+          + `PUT /session/gp-session-on-demand`
+          + `GET /patient/configuration`
+          + `POST /log`
+          + `GET /patient/journey-configuration`
+          + `GET /patient/terms-and-conditions/consent`
+          + `GET /api/users/me/messages/metadata`
+
+          '''
           link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker/NHSOnline.Backend.PfsApi 'GitHub source code'
           link https://github.com/NHSDigital/nhsapp/blob/3faa38effc8d6afa89d29763185bc841fca67504/backendworker/README.md 'README.md'
           link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/583842081/NHS+PFS+-+API+Design#NHSPFSAPIDesign-PFSMonolith 'Confluence description'
@@ -385,12 +403,13 @@ model {
               icon tech:csharp
             }
           }
+
           epsAdapterAPI = component {
             title 'EPS Adapter API'
             description '''
             Enables the NHS App to access the EPS related APIs
             
-            `GET /api/v1/Prescriptions`
+            `GET https://epsadapterapi.nhsapp.service.nhs.uk/api/v1/prescriptions`
 
             '''
             technology 'C# DotNet'
@@ -401,6 +420,7 @@ model {
           }
           epsAdapter.epsAdapterAPI -> epsAdapter.epsAdapterLogic 'Passes on requests'
         }
+        epsAdapterNGinx -> epsAdapter.epsAdapterAPI
       }
 
       utilAdapterPod = container {
@@ -974,6 +994,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'
     }
+
     epsAdapter.epsAdapterLogic -> pfps 'Calls to get prescription details for user.' {
       description '''
       Calls the Prescriptions for Patients FHIR API
@@ -981,6 +1002,7 @@ For example; if the practice stipulates that the maximum number of appointments 
       `GET /Bundle`
       '''
     }
+
     odsservice -> ordapi 'Gets Organisation details' {
       description '''
       Uses ODS code to look up Organisation details.
