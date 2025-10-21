@@ -38,14 +38,7 @@ model {
         Wellola = PEP { title 'Wellola' }
         Zesty = PEP { title 'Zesty' }
     }
-    odsapi = system 'ODS API' {
-        description 'Provides access to Organisation details'
-        link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-fhir 'API Spec'
-        link https://directory.spineservices.nhs.uk/STU3/Organization/B86044 'Example response'
-        style {
-        color gray
-        }
-    }
+
 
     // wayfinder is defined in model.c4
     extend wayfinder {
@@ -77,6 +70,15 @@ model {
                     }
                 }
 
+                recordServiceLogic = component 'Record Service Logic' {
+                    description 'Logic to handle requeststo the Record Service'
+                    technology 'Node.JS Lambda Functions'
+                    style {
+                        icon aws:lambda
+                        color gray
+                    }
+                }
+
                 recordServiceDB = component 'Record Database' {
                     description 'DynamoDB table to store which Services have Secondary Care records for a given patient'
                     technology 'Amazon DocumentDB'
@@ -89,6 +91,14 @@ model {
 
             eventService = container 'Event Service' {
                 eventServiceAPI = component 'Event Service API' {}
+                eventServiceLogic = component 'Event Service Logic' {
+                    description 'Business Logic for the Event Service'
+                    technology 'Node.JS Lambda Functions'
+                    style {
+                        icon aws:lambda
+                        color gray
+                    }
+                }
                 cache = component 'ODS Cache' {
                     technology 'Redis'
                     style {
@@ -96,7 +106,7 @@ model {
                     }
                 }
 
-                eventServiceAPI -> cache 'Cache data'
+                eventServiceLogic -> cache 'Cache data'
             }
 
         }
@@ -116,9 +126,11 @@ model {
         for a given patient
         '''
     }
-    eventServiceAPI -> recordServiceAPI 'Uses'
-    eventService -> odsapi 'Lookup Organisation details' { technology 'Not Authenticated' }
-    recordServiceAPI -> recordServiceDB 'Reads from\nWrites to'
+    eventServiceAPI -> eventServiceLogic 'Passes on request'
+    eventServiceLogic -> recordServiceAPI 'Uses'
+    eventService.eventServiceLogic -> odsapi 'Lookup Organisation details' { technology 'Not Authenticated' }
+    recordServiceAPI -> recordServiceLogic 'Passes requests to'
+    recordServiceLogic -> recordServiceDB 'Reads from\nWrites to'
 
     PKB -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
     Accurx -> recordServiceAPI 'Submit Patient identities' { technology 'API Key'}
@@ -159,12 +171,14 @@ views 'Wayfinder' {
         description 'An initial very high level diagram, showing how Wayfinder is structured.'
         include *
         include PEPS
+        include odsapi
     }
 
     view wfaggregator of wayfinder.aggregator {
         title '02 Aggregator'
         description 'The Record Service is used to identify which Services have Secondary Care records for a given patient.'
         include wayfinder.**
+        include odsapi
     }
 
     view wfrecordService of wayfinder.aggregator.recordService {

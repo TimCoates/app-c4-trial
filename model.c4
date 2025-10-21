@@ -801,6 +801,15 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
+  odsapi = system 'ODS API' {
+      description 'Provides access to Organisation details'
+      link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-fhir 'API Spec'
+      link https://directory.spineservices.nhs.uk/STU3/Organization/B86044 'Example response'
+      style {
+      color gray
+      }
+  }
+
   pdm = system {
     title 'PDM'
     description 'The PDM (Patient Data Manager) system is used to store patient data.'
