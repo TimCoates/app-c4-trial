@@ -510,7 +510,7 @@ model {
       pdmAdapterPod = container {
         title 'PDM Adapter Kubernetes Pod'
         description 'Adapter paired with an NGinx container to talk to PDM'
-
+        technology 'Kubernetes'
         style {
           icon tech:kubernetes
           color red
@@ -518,6 +518,7 @@ model {
 
         pdmNGinx = component {
           title 'NGinx sidecar for PDM Adapter'
+          technology 'NGinx - Docker Container'
           style {
             icon tech:nginx
             color red
@@ -526,14 +527,14 @@ model {
 
         pdmAdapter = container {
           title 'Container to talk to PDM'
-          technology 'C# DotNet'
+          technology 'C# DotNet - Docker Container'
           style {
             color red
             icon tech:kubernetes
           }
 
           pdmAdapterAPI = component {
-            title ''
+            title 'PDM Adapter API'
             description '''
             The PDM Adapter API contains a set of API Endpoints designed to provide access to data held in PDM.
             
