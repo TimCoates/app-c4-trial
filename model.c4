@@ -1029,4 +1029,19 @@ For example; if the practice stipulates that the maximum number of appointments 
     }
 
   }
+
+  AdobeAnalytics = system {
+    title 'Adobe Analytics'
+    technology 'Adobe Analytics'
+    description 'Provides analytics services for the NHS App.'
+    link https://business.adobe.com/uk/products/adobe-analytics.html 'Vendor page'
+    style {
+      color gray
+    }
+  }
+
+  webApp -> AdobeAnalytics 'Sends analytics data to' {
+    description 'Sends anonymized usage data for analysis.'
+    technology 'HTTPS'
+  }
 }
