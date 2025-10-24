@@ -130,7 +130,17 @@ dynamic view oauth {
   }
 
   view WebApp of nhsappservice.webApp {
-    title '02 NHS App / 04 Web App'
+    title '02 NHS App / 01 Web App / 01 Overview'
+    include *
+  }
+
+  view WebAppComponents of nhsappservice.webApp.components {
+    title '02 NHS App / 01 Web App / 02 Web App Components'
+    include *
+  }
+
+  view WebAppPages of nhsappservice.webApp.pages {
+    title '02 NHS App / 01 Web App / 03 Web App Pages'
     include *
   }
 

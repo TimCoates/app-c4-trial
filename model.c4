@@ -46,7 +46,243 @@ model {
       description 'NHS App as viewed in a web browser.'
       technology 'Vue.js, HTML, CSS'
       icon tech:vue
-    }  
+      link https://github.com/NHSDigital/nhsapp/tree/develop/web 'GitHub repo'
+
+
+      pages = container 'Pages' {
+        description 'A collection of Vue.js pages that make up the web app.'
+        style {
+          icon tech:vue
+        }
+
+        advice = component 'advice' {
+          style { icon tech:vue }
+        }
+
+        appointments = component 'appointments' {
+          style { icon tech:vue }
+        }
+
+        authReturn = component 'auth-return' {
+          style { icon tech:vue }
+        }
+
+        biometricsRegistration = component 'biometrics-registration' {
+          style { icon tech:vue }
+        }
+
+        gpRegistration = component 'gp-registration' {
+          style { icon tech:vue }
+        }
+
+        gpSessionOnDemand = component 'gp-session-on-demand' {
+          style { icon tech:vue }
+        }
+
+        gpc = component 'gpc' {
+          style { icon tech:vue }
+        }
+
+        healthRecords = component 'health-records' {
+          style { icon tech:vue }
+        }
+
+        linkedProfiles = component 'linked-profiles' {
+          style { icon tech:vue }
+        }
+
+        messages = component 'messages' {
+          style { icon tech:vue }
+        }
+
+        more = component 'more' {
+          style { icon tech:vue }
+        }
+
+        notifications = component 'notifications' {
+          style { icon tech:vue }
+        }
+
+        organDonation = component 'organ-donation' {
+          style { icon tech:vue }
+        }
+
+        prescriptions = component 'prescriptions' {
+          style { icon tech:vue }
+        }
+
+        redirector = component 'redirector' {
+          style { icon tech:vue }
+        }
+
+        silverIntegration = component 'silver-integration' {
+          style { icon tech:vue }
+        }
+
+        switchProfile = component 'switch-profile' {
+          style { icon tech:vue }
+        }
+
+        uplift = component 'uplift' {
+          style { icon tech:vue }
+        }
+      }
+
+      components = container 'Components' {
+        description 'A collection of Vue.js components that make up the web app.'
+        style {
+          icon tech:vue
+        }
+        
+        appointments = component 'Appointments' {
+          description 'Allows users to view and manage their appointments.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        errors = component 'Error Handling' {
+          description 'Handles errors in the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        gp-medical-records = component 'GP Medical Records' {
+          description 'Allows users to view their GP medical records.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        gp-messages = component 'GP Messages' {
+          description 'Allows users to view and send messages from their GP.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        gp-test-results = component 'GP Test Results' {
+          description 'Allows users to view their GP test results.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        gpc = component 'GP Connect' {
+          description 'Allows users to access GP Connect services.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        gpInfo = component 'GP Info' {
+          description 'Displays information about the user\'s GP practice.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        linkedprofiles = component 'linked profiles' {
+          description 'Allows users to manage linked profiles.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        menuItems = component 'Menu Items' {
+          description 'Handles the menu items in the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        messaging = component 'Messaging' {
+          description 'Handles messaging functionality in the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        myrecord = component 'My Record' {
+          description 'Allows users to view their medical records.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        nhsukfrontend = component 'NHS.UK Frontend' {
+          description 'The NHS.UK Frontend is a library of styles, components and patterns for building NHS digital services.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        nominatedPharmacy = component 'Nominated Pharmacy' {
+          description 'Allows users to manage their nominated pharmacy.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        onlineConsultations = component 'Online Consultations' {
+          description 'Allows users to access online consultations.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        organDonation = component 'Organ Donation' {
+          description 'Allows users to manage their organ donation preferences.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        prescriptions = component 'Prescriptions' {
+          description 'Allows users to view and manage their prescriptions.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        redirector = component 'Redirector' {
+          description 'Handles redirection within the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        shutters = component 'Shutters' {
+          description 'Handles shutter functionality in the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        switchProfile = component 'Switch Profile' {
+          description 'Allows users to switch between profiles.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        uplift = component 'Uplift' {
+          description 'Handles uplift functionality in the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+
+        widgets = component 'Widgets' {
+          description 'Contains widgets in the web app.'
+          style {
+            icon tech:vue
+          }
+        }
+      }
+
+    }
 
     NativeApp = container 'Native App' {
       link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/97e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
