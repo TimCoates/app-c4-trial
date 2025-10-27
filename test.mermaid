@@ -1,11 +1,12 @@
 sequenceDiagram
-    title: Diagram just to illustrate link between LikeC4 and Mermaid diagrams    participant Alice
+title: Illustrates link between LikeC4 and Mermaid
 
     participant John
+    participant Alice
+%% This doesn't work, despite the details in actorMenus here: https://docs.mermaidchart.com/mermaid-oss/syntax/sequenceDiagram.html
+    link Alice: Dashboard @ https://dashboard.contoso.com/alice
 
     Alice->>+John: Hello John, how are you?
     Alice->>+John: John, can you hear me?
     John-->>-Alice: Hi Alice, I can hear you!
     John-->>-Alice: I feel great!
-
-    link Alice: Dashboard @ https://dashboard.contoso.com/alice
