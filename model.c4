@@ -567,14 +567,14 @@ model {
           }
 
           pdsAdapterAPI = component {
-            title '''
+            description '''
             PDS Adapter API
 
             `GET /v1/patient/nominated-pharmacy`
             `POST /v1/patient/nominated-pharmacy`
 
             '''
-            description 'API for the PDS API'
+            title 'API for the PDS API'
           }
 
           pdsAdapterLogic = component {
