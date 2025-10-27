@@ -294,6 +294,7 @@ model {
       androidapp = container 'Native Android App' {
         description 'Native Android App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-android 'Code repository'
+        link https://play.google.com/store/apps/details?id=com.nhs.online.nhsonline 'App in the Google Play Store'
         style {
           icon tech:kotlin
           shape mobile
@@ -319,6 +320,7 @@ model {
       iosapp = container 'Native iOS App' {
         description 'Native iOS App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-ios 'Code repository'
+        link https://apps.apple.com/gb/app/nhs-app/id1388411277 'App in the Apple App Store'
         style {
           icon tech:swift
           shape mobile
