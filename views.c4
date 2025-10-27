@@ -205,6 +205,15 @@ dynamic view oauth {
     nhsappservice.webApp
   }
 
+  view ServiceSearch of servicesearch {
+    title '04 External Systems / 05 Service Search API'
+    include nhsappservice.webApp,
+    nhsappservice.pdsAdapterPod,
+    nhsappservice.pdsAdapterPod.**,
+    servicesearch,
+    servicesearch.**
+  }
+
   view GPSystems of GPSystems {
     title '04 External Systems / 01 GP Systems / 00 Overview'
     include *

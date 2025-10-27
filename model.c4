@@ -1012,6 +1012,36 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       icon tech:csharp
       color gray
     }
+    serviceSearchV1 = container {
+      title 'Service Search V1'
+      description 'Provides search functionality for NHS services.'
+      link https://nhsd-confluence.digital.nhs.uk/x/8YfLB 'Confluence space'
+      link https://digital.nhs.uk/developer/api-catalogue/directory-of-healthcare-services/service-search-versions-1-and-2 'Service description'
+      style {
+        icon tech:csharp
+        color gray
+      }
+    }
+    serviceSearchV2 = container {
+      title 'Service Search V2'
+      description 'Provides search functionality for NHS services.'
+      link https://nhsd-confluence.digital.nhs.uk/x/8YfLB 'Confluence space'
+      link https://digital.nhs.uk/developer/api-catalogue/directory-of-healthcare-services/service-search-versions-1-and-2 'Service description'
+      style {
+        icon tech:csharp
+        color gray
+      }
+    }
+    serviceSearchV3 = container {
+      title 'Service Search V3'
+      description 'PROPOSED Provides search functionality for NHS services.'
+      link https://nhsd-confluence.digital.nhs.uk/x/8YfLB 'Confluence space'
+      link https://digital.nhs.uk/developer/api-catalogue/directory-of-healthcare-services/service-search-versions-1-and-2 'Service description'
+      style {
+        icon tech:csharp
+        color red
+      }
+    }
   }
 
   wayfinder = system 'Wayfinder Patient Care Aggregator' {
@@ -1237,7 +1267,8 @@ For example; if the practice stipulates that the maximum number of appointments 
       link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'API Catalogue' 
       technology 'RESTful FHIR API over HTTPS, OAuth 2.0 Token Exchange'
     }
-    pdsAdapter.pdsAdapterLogic -> servicesearch 'Uses to search for NHS services'
+    pdsAdapter.pdsAdapterLogic -> servicesearch.serviceSearchV1 'Uses to search for NHS services'
+    pdsAdapter.pdsAdapterLogic -> servicesearch.serviceSearchV2 'Uses to search for NHS services'
     secondaryCareAdapter.secondaryCareAdapterLogic -> wayfinder.aggregator.eventService.eventServiceAPI {
       description  'Calls to get secondary care service details for user.'
       technology 'OAuth 2.0 Token Exchange'
