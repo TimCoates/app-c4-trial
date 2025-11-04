@@ -458,6 +458,7 @@ model {
         title 'Secondary Care Adapter Pod'
         description 'Handles communication with the Wayfinder Patient Care Aggregator.'
         technology 'Kubernetes'
+        link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/c7e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
         style {
           icon tech:kubernetes
         }
@@ -500,6 +501,7 @@ model {
         description 'Handles communication with GP Connect services.'
         icon tech:kubernetes
         technology 'Kubernetes'
+        link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/c6e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
 
         gpConnectAdapterNGinx = component {
           title 'GP Connect Adapter NGINX'
@@ -668,6 +670,7 @@ model {
         title 'Utility Adapter Pod'
         description 'Provides Utility services.'
         technology 'Kubernetes'
+        link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/c8e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
         style {
           icon tech:kubernetes
         }
