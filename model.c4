@@ -295,6 +295,7 @@ model {
         description 'Native Android App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-android 'Code repository'
         link https://play.google.com/store/apps/details?id=com.nhs.online.nhsonline 'App in the Google Play Store'
+        link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/97e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
         style {
           icon tech:kotlin
           shape mobile
@@ -321,6 +322,7 @@ model {
         description 'Native iOS App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-ios 'Code repository'
         link https://apps.apple.com/gb/app/nhs-app/id1388411277 'App in the Apple App Store'
+        link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/98e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
         style {
           icon tech:swift
           shape mobile
@@ -620,6 +622,7 @@ model {
         description 'Handles communication with the EPS services.'
         icon tech:kubernetes
         technology 'Kubernetes'
+        link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/c5e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
 
         epsAdapterNGinx = component {
           title 'EPS Adapter NGINX'
