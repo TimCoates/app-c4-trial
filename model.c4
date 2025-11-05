@@ -32,7 +32,8 @@ model {
   }
 
   // NHS App System
-  nhsappservice = system 'NHS App Service' {
+  nhsappservice = system {
+    title 'NHS App Service'
 
     style {
       icon ./NHS_Icon.png
@@ -42,239 +43,281 @@ model {
     link https://nhsd-confluence.digital.nhs.uk/x/f_9xCQ 'Confluence space'
     link https://github.com/TimCoates/app-c4-trial/blob/main/test.mermaid 'Example link how we can link to a Sequence Diagram'
 
-    webApp = container 'Web version of the NHS App' {
+    webApp = container {
+      title 'Web version of the NHS App'
       description 'NHS App as viewed in a web browser.'
       technology 'Vue.js, HTML, CSS'
       icon tech:vue
       link https://github.com/NHSDigital/nhsapp/tree/develop/web 'GitHub repo'
 
 
-      pages = container 'Pages' {
+      pages = container {
+        title 'Pages'
         description 'A collection of Vue.js pages that make up the web app.'
         style {
           icon tech:vue
         }
 
-        advice = component 'advice' {
+        advice = component {
+          title 'advice'
           style { icon tech:vue }
         }
 
-        appointments = component 'appointments' {
+        appointments = component {
+          title 'appointments'
           style { icon tech:vue }
         }
 
-        authReturn = component 'auth-return' {
+        authReturn = component {
+          title 'auth-return'
           style { icon tech:vue }
         }
 
-        biometricsRegistration = component 'biometrics-registration' {
+        biometricsRegistration = component {
+          title 'biometrics-registration'
           style { icon tech:vue }
         }
 
-        gpRegistration = component 'gp-registration' {
+        gpRegistration = component {
+          title 'gp-registration'
           style { icon tech:vue }
         }
 
-        gpSessionOnDemand = component 'gp-session-on-demand' {
+        gpSessionOnDemand = component {
+          title 'gp-session-on-demand'
           style { icon tech:vue }
         }
 
-        gpc = component 'gpc' {
+        gpc = component {
+          title 'gpc'
           style { icon tech:vue }
         }
 
-        healthRecords = component 'health-records' {
+        healthRecords = component {
+          title 'health-records'
           style { icon tech:vue }
         }
 
-        linkedProfiles = component 'linked-profiles' {
+        linkedProfiles = component {
+          title 'linked-profiles'
           style { icon tech:vue }
         }
 
-        messages = component 'messages' {
+        messages = component {
+          title 'messages'
           style { icon tech:vue }
         }
 
-        more = component 'more' {
+        more = component {
+          title 'more'
           style { icon tech:vue }
         }
 
-        notifications = component 'notifications' {
+        notifications = component {
+          title 'notifications'
           style { icon tech:vue }
         }
 
-        organDonation = component 'organ-donation' {
+        organDonation = component {
+          title 'organ-donation'
           style { icon tech:vue }
         }
 
-        prescriptions = component 'prescriptions' {
+        prescriptions = component {
+          title 'prescriptions'
           style { icon tech:vue }
         }
 
-        redirector = component 'redirector' {
+        redirector = component {
+          title 'redirector'
           style { icon tech:vue }
         }
 
-        silverIntegration = component 'silver-integration' {
+        silverIntegration = component {
+          title 'silver-integration'
           style { icon tech:vue }
         }
 
-        switchProfile = component 'switch-profile' {
+        switchProfile = component {
+          title 'switch-profile'
           style { icon tech:vue }
         }
 
-        uplift = component 'uplift' {
+        uplift = component {
+          title 'uplift'
           style { icon tech:vue }
         }
       }
 
-      components = container 'Components' {
+      components = container {
+        title 'Components'
         description 'A collection of Vue.js components that make up the web app.'
         style {
           icon tech:vue
         }
         
-        appointments = component 'Appointments' {
+        appointments = component {
+          title 'Appointments'
           description 'Allows users to view and manage their appointments.'
           style {
             icon tech:vue
           }
         }
 
-        errors = component 'Error Handling' {
+        errors = component {
+          title 'Error Handling'
           description 'Handles errors in the web app.'
           style {
             icon tech:vue
           }
         }
 
-        gp-medical-records = component 'GP Medical Records' {
+        gp-medical-records = component {
+          title 'GP Medical Records'
           description 'Allows users to view their GP medical records.'
           style {
             icon tech:vue
           }
         }
 
-        gp-messages = component 'GP Messages' {
+        gp-messages = component {
+          title 'GP Messages'
           description 'Allows users to view and send messages from their GP.'
           style {
             icon tech:vue
           }
         }
 
-        gp-test-results = component 'GP Test Results' {
+        gp-test-results = component {
+          title 'GP Test Results'
           description 'Allows users to view their GP test results.'
           style {
             icon tech:vue
           }
         }
 
-        gpc = component 'GP Connect' {
+        gpc = component {
+          title 'GP Connect'
           description 'Allows users to access GP Connect services.'
           style {
             icon tech:vue
           }
         }
 
-        gpInfo = component 'GP Info' {
+        gpInfo = component {
+          title 'GP Info'
           description 'Displays information about the user\'s GP practice.'
           style {
             icon tech:vue
           }
         }
 
-        linkedprofiles = component 'linked profiles' {
+        linkedprofiles = component {
+          title 'linked profiles'
           description 'Allows users to manage linked profiles.'
           style {
             icon tech:vue
           }
         }
 
-        menuItems = component 'Menu Items' {
+        menuItems = component {
+          title 'Menu Items'
           description 'Handles the menu items in the web app.'
           style {
             icon tech:vue
           }
         }
 
-        messaging = component 'Messaging' {
+        messaging = component {
+          title 'Messaging'
           description 'Handles messaging functionality in the web app.'
           style {
             icon tech:vue
           }
         }
 
-        myrecord = component 'My Record' {
+        myrecord = component {
+          title 'My Record'
           description 'Allows users to view their medical records.'
           style {
             icon tech:vue
           }
         }
 
-        nhsukfrontend = component 'NHS.UK Frontend' {
+        nhsukfrontend = component {
+          title 'NHS.UK Frontend'
           description 'The NHS.UK Frontend is a library of styles, components and patterns for building NHS digital services.'
           style {
             icon tech:vue
           }
         }
 
-        nominatedPharmacy = component 'Nominated Pharmacy' {
+        nominatedPharmacy = component {
+          title 'Nominated Pharmacy'
           description 'Allows users to manage their nominated pharmacy.'
           style {
             icon tech:vue
           }
         }
 
-        onlineConsultations = component 'Online Consultations' {
+        onlineConsultations = component {
+          title 'Online Consultations'
           description 'Allows users to access online consultations.'
           style {
             icon tech:vue
           }
         }
 
-        organDonation = component 'Organ Donation' {
+        organDonation = component {
+          title 'Organ Donation'
           description 'Allows users to manage their organ donation preferences.'
           style {
             icon tech:vue
           }
         }
 
-        prescriptions = component 'Prescriptions' {
+        prescriptions = component {
+          title 'Prescriptions'
           description 'Allows users to view and manage their prescriptions.'
           style {
             icon tech:vue
           }
         }
 
-        redirector = component 'Redirector' {
+        redirector = component {
+          title 'Redirector'
           description 'Handles redirection within the web app.'
           style {
             icon tech:vue
           }
         }
 
-        shutters = component 'Shutters' {
+        shutters = component {
+          title 'Shutters'
           description 'Handles shutter functionality in the web app.'
           style {
             icon tech:vue
           }
         }
 
-        switchProfile = component 'Switch Profile' {
+        switchProfile = component {
+          title 'Switch Profile'
           description 'Allows users to switch between profiles.'
           style {
             icon tech:vue
           }
         }
 
-        uplift = component 'Uplift' {
+        uplift = component {
+          title 'Uplift'
           description 'Handles uplift functionality in the web app.'
           style {
             icon tech:vue
           }
         }
 
-        widgets = component 'Widgets' {
+        widgets = component {
+          title 'Widgets'
           description 'Contains widgets in the web app.'
           style {
             icon tech:vue
@@ -284,14 +327,16 @@ model {
 
     }
 
-    NativeApp = container 'Native App' {
+    NativeApp = container {
+      title 'Native App'
       link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/97e39153-6f05-f011-af04-04d3b0c2d3c2 'Object in Aalto'
 
       style {
         icon ./NHS_Icon.png
       }
 
-      androidapp = container 'Native Android App' {
+      androidapp = container {
+        title 'Native Android App'
         description 'Native Android App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-android 'Code repository'
         link https://play.google.com/store/apps/details?id=com.nhs.online.nhsonline 'App in the Google Play Store'
@@ -301,14 +346,16 @@ model {
           shape mobile
         }
 
-        androidapplogic = container 'App Logic' {
+        androidapplogic = container {
+          title 'App Logic'
           description 'Runs the native app functionality.'
           style {
             icon tech:kotlin
           }
         }
 
-        androidwebview = webview 'Web View' {
+        androidwebview = webview {
+          title 'Web View'
           description 'An Andoid WebView component that renders web content within the app.'
           link https://developer.android.com/reference/android/webkit/WebView 'Android WebView documentation'
           icon tech:chrome
@@ -318,7 +365,8 @@ model {
         }
       }
 
-      iosapp = container 'Native iOS App' {
+      iosapp = container {
+        title 'Native iOS App'
         description 'Native iOS App that allows users to access a range of NHS services.'
         link https://github.com/NHSDigital/nhsapp-ios 'Code repository'
         link https://apps.apple.com/gb/app/nhs-app/id1388411277 'App in the Apple App Store'
@@ -328,14 +376,16 @@ model {
           shape mobile
         }
 
-        iosapplogic = container 'App Logic' {
+        iosapplogic = container {
+          title 'App Logic'
           description 'Runs the native app functionality.'
           style {
             icon tech:swift
           }
         }
 
-        ioswebview = webview 'Web View' {
+        ioswebview = webview {
+          title 'Web View'
           description 'An iOS WebView control, that renders web content within the app.'
           link https://developer.apple.com/design/human-interface-guidelines/web-views 'Apple WebView documentation'
           icon tech:apple-safari
@@ -375,14 +425,16 @@ model {
       link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/608909289/Backend+API+-+User+Session+Creation 'Session creation mechanism'
     }
 
-    backend = container 'Backend' {
+    backend = container {
+      title 'Backend'
       description 'A collection of components that handle API requests from the Native App and Web App, and communicate with external services.'
 
       style {
         icon ./NHS_Icon.png
       }
 
-      monolith = container 'App backend monolith' {
+      monolith = container {
+        title 'App backend monolith'
         description 'Handles App backend calls.'
         technology 'C# DotNet Kubernetes Pod'
         link https://github.com/NHSDigital/nhsapp/tree/develop/backendworker 'Code repository'
@@ -391,7 +443,8 @@ model {
           opacity 10%
         }
 
-        sjrapi = component 'SJR API' {
+        sjrapi = component {
+          title 'SJR API'
           description 'Handles retrieval of SJR'
           style {
             icon tech:csharp
@@ -426,14 +479,16 @@ model {
           }
         }
 
-        sessionapi = component 'Session API' {
+        sessionapi = component {
+          title 'Session API'
           description 'Handles session management'
           style {
             icon tech:csharp
           }
         }
 
-        userinfodevice = component 'Users Info & Devices' {
+        userinfodevice = component {
+          title 'Users Info & Devices'
           description 'Holds user and device information.'
           style {
             icon tech:cosmosdb
@@ -441,7 +496,8 @@ model {
           }
         }
 
-        sessions = component 'Sessions' {
+        sessions = component {
+          title 'Sessions'
           description 'Holds session information.'
           style {
             icon tech:cosmosdb
@@ -472,17 +528,20 @@ model {
           }
         }
 
-        secondaryCareAdapter = container 'Secondary Care Adapter' {
+        secondaryCareAdapter = container {
+          title 'Secondary Care Adapter'
           description 'Handles communication with Wayfinder Patient Care Aggregator'
           link https://nhsd-confluence.digital.nhs.uk/x/LUJSMQ 'Confluence page'
           link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/827474477/NHSApp+Secondary+Care+API+Adapter#NHSAppSecondaryCareAPIAdapter-Flow 'Processing'
           link https://github.com/NHSDigital/nhsapp-secondary-care-api-adapter 'GitHub repo'
           style { icon tech:csharp }
-          secondaryCareAdapterLogic = component 'Secondary Care Adapter Logic' {
+          secondaryCareAdapterLogic = component {
+            title 'Secondary Care Adapter Logic'
             description 'Represents the compute/logic in the Secondary Care Adapter'
             style { icon tech:csharp }
           }
-          secondaryCareAdapterAPI = component 'Secondary Care Adapter API' {
+          secondaryCareAdapterAPI = component {
+            title 'Secondary Care Adapter API'
             description '''
             `GET /v1/SecondaryCare/summary`
             
@@ -512,7 +571,8 @@ model {
           }
         }
 
-        gpConnectAdapter = container 'GP Connect Adapter' {
+        gpConnectAdapter = container {
+          title 'GP Connect Adapter'
           description 'Handles communication with the GP Connect services.'
           link https://github.com/NHSDigital/nhsapp-gpconnect-api-adapter 'GitHub code'
           technology 'C# DotNet Kubernetes Pod'
@@ -560,7 +620,8 @@ model {
           }
         }
 
-        pdsAdapter = container 'PDS Adapter' {
+        pdsAdapter = container {
+          title 'PDS Adapter'
           description 'Communicates with PDS.'
           technology 'C# DotNet Kubernetes Pod'
           link https://nhsd-confluence.digital.nhs.uk/x/OQB-N 'Confluence page'
@@ -596,21 +657,24 @@ model {
 
       }
 
-      nandm = container 'Notifications and Messaging' {
+      nandm = container {
+        title 'Notifications and Messaging'
         description 'Handles Patient Messages and Notifications.'
         technology 'C# DotNet Azure Function Apps'
         style {
           icon azure:function-apps
         }
 
-        odsservice = container 'ODS Service' {
+        odsservice = container {
+          title 'ODS Service'
           description 'Handles ODS code lookups.'
           style {
             icon tech:csharp
           }
         }
 
-        database = component 'Database' {
+        database = component {
+          title 'Database'
           description 'Stores Patient Messages and Notifications.'
           style {
             icon tech:cosmosdb
@@ -631,7 +695,8 @@ model {
           description 'Sidecar container for the EPS Adapter.'
         }
 
-        epsAdapter = container 'EPS Adapter' {
+        epsAdapter = container {
+          title 'EPS Adapter Pod'
           description 'Handles calls to EPS'
           technology 'C# DotNet Kubernetes Pod'
           style {
@@ -723,7 +788,8 @@ model {
         utilAdapterNGinx -> utilAdapter.utilAdapterEndpoint
       }
 
-      eventLogger = container 'Event Logger' {
+      eventLogger = container {
+        title 'Event Logger'
         description 'The EventLogger solution is designed as a middleware component to the technical landscape and presents a common endpoint that will receive Audit/Analytics OR Logging/exception handle messages. Based on a type, the given messages will be sent to a designated queue for follow on processing. Normally this would be storage and analytics information processing.'
         link https://github.com/NHSDigital/nhsapp-event-logger 'GitHub code'
         link https://nhsd-confluence.digital.nhs.uk/spaces/NO/pages/604902867/Event+Logger+-+User+Guide+-+Developer+Draft 'Confluence page'
@@ -732,7 +798,8 @@ model {
           icon tech:csharp
         }
 
-        component eventLoggerEndpoint 'Event Logger Endpoint' {
+        component eventLoggerEndpoint {
+          title 'Event Logger Endpoint'
           description '''
           The Event Logger Endpoint receives log messages from other components.
           
@@ -743,7 +810,8 @@ model {
           }
         }
 
-        component eventLoggerLogic 'Event Logger Logic' {
+        component eventLoggerLogic {
+          title 'Event Logger Logic'
           description 'Processes log messages and routes them.'
           style {
             icon tech:csharp
@@ -950,7 +1018,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
   }
 
   // NHSE But external to NHS App Systems
-  login = system 'NHS login' {
+  login = system {
+    title 'NHS login'
     description 'Handles user authentication and authorization.'
     link https://nhsd-confluence.digital.nhs.uk/x/HMQLB 'Confluence space'
     link https://digital.nhs.uk/services/nhs-login 'Public pages'
@@ -960,7 +1029,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
-  pds = system 'PDS' {
+  pds = system {
+    title 'PDS'
     description 'The Personal Demographics Service (PDS) is the national electronic database of NHS patient demographic details.'
     link https://digital.nhs.uk/services/personal-demographics-service 'Public pages'
     style {
@@ -968,7 +1038,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       color gray
     }
 
-    pdsdatabase = component 'RIAK Database' {
+    pdsdatabase = component {
+      title 'RIAK Database'
       style {
         color slate
         shape cylinder
@@ -976,7 +1047,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
 
 
-    component pdsfhirapi 'PDS FHIR API' {
+    component pdsfhirapi {
+      title 'PDS FHIR API'
       description 'The PDS FHIR API provides access to patient demographic details stored in PDS.'
       link https://digital.nhs.uk/services/personal-demographics-service/pds-fhir-api 'Public pages'
       style {
@@ -985,19 +1057,22 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
       }
 
 
-      pdsfhirapiget = component 'Get patient details: GET /Patient/{id}' {
+      pdsfhirapiget = component {
+        title 'Get patient details: GET /Patient/{id}'
         description 'Use this endpoint to get patient details from PDS for a given NHS number. You cannot get a patients related people details, use the RelatedPerson endpoint instead.'
         link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient/-id- 'Api specification'
       }
 
-      pdsfhirapipatch = component 'Update patient details: PATCH /Patient/{id}' {
+      pdsfhirapipatch = component {
+        title 'Update patient details: PATCH /Patient/{id}'
         description 'Use this endpoint to update patient details in PDS.'
         link https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#patch-/Patient/-id- 'API specification'
       }
 
     }
 
-    component pdshl7v3api 'PDS HL7v3 API' {
+    component pdshl7v3api {
+      title 'PDS HL7v3 API'
       description 'The PDS HL7v3 API provides access to patient demographic details stored in PDS.'
       link https://data.developer.nhs.uk/dms/mim/6.3.01/Index.htm 'MIM 6.3.01'
       link https://digital.nhs.uk/developer/guides-and-documentation/message-implementation-manuals 'MIM index' 
@@ -1010,7 +1085,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     pdsfhirapi -> pdsdatabase 'Read from and write to'
   }
 
-  servicesearch = system 'Service Search' {
+  servicesearch = system {
+    title 'Service Search'
     description 'Provides search functionality for NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/8YfLB 'Confluence space'
     link https://developer.api.nhs.uk/nhs-api/documentation/service-search-organisations-2 'Service description'
@@ -1050,7 +1126,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
-  wayfinder = system 'Wayfinder Patient Care Aggregator' {
+  wayfinder = system {
+    title 'Wayfinder Patient Care Aggregator'
     description 'Provides location and directions to NHS services.'
     link https://nhsd-confluence.digital.nhs.uk/x/8w9xFg 'Confluence space'
     style {
@@ -1059,7 +1136,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
-  pfps = system 'Prescriptions for Patients FHIR API' {
+  pfps = system {
+    title 'Prescriptions for Patients FHIR API'
     description 'Provides access to patient prescriptions.'
     link https://nhsd-confluence.digital.nhs.uk/x/coRhQ 'Confluence space'
     style {
@@ -1068,7 +1146,8 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
-  ordapi = system 'ORD API' {
+  ordapi = system {
+    title 'ORD API'
     description 'Provides access to Organisation details'
     link https://nhsd-confluence.digital.nhs.uk/x/1YfLB 'Confluence space'
     style {
@@ -1076,13 +1155,14 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
     }
   }
 
-  odsapi = system 'ODS API' {
-      description 'Provides access to Organisation details'
-      link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-fhir 'API Spec'
-      link https://directory.spineservices.nhs.uk/STU3/Organization/B86044 'Example response'
-      style {
-      color gray
-      }
+  odsapi = system {
+    title 'ODS API'
+    description 'Provides access to Organisation details'
+    link https://digital.nhs.uk/developer/api-catalogue/organisation-data-service-fhir 'API Spec'
+    link https://directory.spineservices.nhs.uk/STU3/Organization/B86044 'Example response'
+    style {
+    color gray
+    }
   }
 
   pdm = system {
@@ -1097,121 +1177,144 @@ EMIS Web is capable of storing multiple document formats, and the API will retur
   }
 
   // Fully external systems
-  GPSystems = system 'GP Systems' {
+  GPSystems = system {
+    title 'GP Systems'
     description 'Systems used by General Practitioners (GPs) to manage patient records and appointments.'
     style {
       color gray
     }
 
-    optum = system 'Optum (EMIS Web)' {
+    optum = system {
+      title 'Optum (EMIS Web)'
       description 'A widely used GP system in the UK.'
       link https://www.optum.com/solutions/uk-healthcare/emis-web.html 'Vendor page'
       style { color gray }
 
-      optumIM1PFS = container 'Optum (EMIS Web) IM1 PFS API' {
+      optumIM1PFS = container {
+        title 'Optum (EMIS Web) IM1 PFS API'
         description 'Provides access to patient records.'
         link https://nhsd-confluence.digital.nhs.uk/spaces/DCA/pages/950562906/EMIS+PFS+API 'Confluence page'
         style { color gray }
 
-        emisim1pfsapptmanagement = component 'Appointment Management' {
+        emisim1pfsapptmanagement = component {
+          title 'Appointment Management'
           description 'Handles appointment management.'
           style { color gray }
 
-          emisim1pfsappointments = component 'appointments' {
+          emisim1pfsappointments = component {
+            title 'appointments'
             description 'GET /appointments\nPOST /appointments\nDELETE /appointments\nThe appointments resource is used to manage the appointments booked for a patient record. Appointments booked are managed per record, however, each ROSU has their own allocation of allowed appointments. This is managed by the Practice.
 For example; if the practice stipulates that the maximum number of appointments is 3, then each ROSU attached to a patient record is allowed to have 3 appointments booked for that patient at any one time. Appointments booked via the practice (either over the phone or in person) are not taken into account.'
             
             style { color gray }
           }
 
-          emisim1pfsappointmentslots = component 'appointmentslots' {
+          emisim1pfsappointmentslots = component {
+            title 'appointmentslots'
             description 'GET /appointmentslots/meta\nGET /appointmentslots\nThe appointmentslots resource is a representation of the available appointment diary held by the practice. Any sessions and slots made available for booking via PFS will be shown here. The resource is split into two individual components, the “metadata” and the slot list. The metadata call can be used to help define a filter when retrieving appointment slots. Sessions may be perceived as appointment slot containers for the purposes of the PFS API.'
             style { color gray }
           }
         }
 
-        emisim1pfspatientcomms = component 'Communicate with Patient' {
+        emisim1pfspatientcomms = component {
+          title 'Communicate with Patient'
           description 'Handles communication with patients.'
           style { color gray }
 
-          emisim1pfspatientcommsrecipients = component 'messagerecipients' {
+          emisim1pfspatientcommsrecipients = component {
+            title 'messagerecipients'
             description 'Handles recipients of communications.'
             style { color gray }
           }
 
-          emisim1pfspatientcommsmessages = component 'messages' {
+          emisim1pfspatientcommsmessages = component {
+            title 'messages'
             description 'Handles messages.'
             style { color gray }
         }
         }
 
-        emisim1pfsgetrecord = component 'Get Record' {
+        emisim1pfsgetrecord = component {
+          title 'Get Record'
           description 'Handles retrieval of patient records.'
           style { color gray }
 
-          emisim1pfsgetrecorddemographics = component 'demographics' {
+          emisim1pfsgetrecorddemographics = component {
+            title 'demographics'
             description 'Handles patient demographics.'
             style { color gray }
           }
 
-          emisim1pfsgetrecorddemographicsrequests = component 'demographicsrequest' {
+          emisim1pfsgetrecorddemographicsrequests = component {
+            title 'demographicsrequest'
             description 'Handles requests for patient demographics.'
             style { color gray }
           }
 
-          emisim1pfsgetrecorddocuments = component 'documents' {
+          emisim1pfsgetrecorddocuments = component {
+            title 'documents'
             description 'Handles patient documents.'
             style { color gray }
           }
 
-          emisim1pfsgetrecordrecords = component 'record' {
+          emisim1pfsgetrecordrecords = component {
+            title 'record'
             description 'Handles patient record.'
             style { color gray }
           }
 
         }
 
-        emisim1pfsprescriptions = component 'Prescriptions' {
+        emisim1pfsprescriptions = component {
+          title 'Prescriptions'
           description 'Handles patient prescriptions.'
           style { color gray }
 
-          emisim1pfsgetrecordprescriptioncourses = component 'Courses' {
+          emisim1pfsgetrecordprescriptioncourses = component {
+            title 'Courses'
             description 'Handles prescription courses.'
             style { color gray }
           }
 
-          emisim1pfsgetrecordprescriptionpharmacies = component 'pharmacies' {
+          emisim1pfsgetrecordprescriptionpharmacies = component {
+            title 'pharmacies'
             description 'Handles pharmacies.'
             style { color gray }
           }
 
-          emisim1pfsgetrecordprescriptionrequests = component 'prescriptionrequests' {
+          emisim1pfsgetrecordprescriptionrequests = component {
+            title 'prescriptionrequests'
             description 'Handles prescription requests.'
             style { color gray }
 
           }
         }
 
-        emisim1pfsusersessions = component 'User and Session Management' {
+        emisim1pfsusersessions = component {
+          title 'User and Session Management'
           description 'Handles user and session management.'
           style { color gray }
 
-          emisim1pfsusersessionsme = component 'me' {
+          emisim1pfsusersessionsme = component {
+            title 'me'
             description 'The me resource relates directly to the ROSU and their account in the clinical system. This resource has no interaction with any patient record. It also controls linking the subsidiary user to the ROSU in EMIS Web.'
             style { color gray }
           }
 
-          emisim1pfsusersessionspractices = component 'practices' {
+          emisim1pfsusersessionspractices = component {
+            title 'practices'
             description 'Gives details of practice, and services available from that practice.'
             style { color gray }
           }
 
-          emisim1pfsusersessionssessions = component 'sessions' {
+          emisim1pfsusersessionssessions = component {
+            title 'sessions'
             description 'Handles sessions information.'
             style { color gray }
           }
 
-          emisim1pfsusersessionsusers = component 'users' {
+          emisim1pfsusersessionsusers = component {
+            title 'users'
             description 'Handles users information.'
             style { color gray }
           }
@@ -1219,7 +1322,8 @@ For example; if the practice stipulates that the maximum number of appointments 
       }
     }
 
-    tpps1 = system 'TPP SystmOne' {
+    tpps1 = system {
+      title 'TPP SystmOne'
       description 'A widely used GP system in the UK.'
       link https://www.tpp-uk.com/solutions/systmone/ 'Vendor page'
       style {
@@ -1227,7 +1331,8 @@ For example; if the practice stipulates that the maximum number of appointments 
       }
     }
 
-    medicus = system 'Medicus' {
+    medicus = system {
+      title 'Medicus'
       description 'A GP system used by some practices in the UK.'
       link https://www.medicus.com/ 'Vendor page'
       style {

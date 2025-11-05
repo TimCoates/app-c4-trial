@@ -7,6 +7,7 @@ specification {
   deploymentNode zone
   deploymentNode kubernetes {
     // Nodes have same styling options
+    link https://nhsarchitecture.horizzon.cloud/sites/4b53edd4-70ee-451c-af34-7d70040b4d2c/objects/046e1d4f-8805-f011-af04-04d3b0c2d3c2 'Object in Aalto'
     style {
       color blue
       icon azure:aks-automatic
