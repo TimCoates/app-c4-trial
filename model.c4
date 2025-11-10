@@ -360,9 +360,13 @@ model {
           link https://developer.android.com/reference/android/webkit/WebView 'Android WebView documentation'
           icon tech:chrome
         }
-        androidapplogic -> androidwebview 'Drives' {
-          description 'The Android native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
+        androidapplogic -> androidwebview {
+          title 'The Android native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
         }
+        androidwebview -> androidapplogic {
+          title 'The web content in the app can communicate back to the Native App logic'
+        }
+
       }
 
       iosapp = container {
