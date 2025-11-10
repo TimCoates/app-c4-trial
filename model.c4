@@ -390,7 +390,13 @@ model {
           link https://developer.apple.com/design/human-interface-guidelines/web-views 'Apple WebView documentation'
           icon tech:apple-safari
         }
-        iosapplogic -> ioswebview 'The iOS native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
+        iosapplogic -> ioswebview {
+          title 'The iOS native code instructs the WebView control to load specific URLs. The WebView then displays the web content in the app.'
+        }
+        ioswebview -> iosapplogic {
+          title 'The web content in the app can communicate back to the Native App logic'
+        }
+
       }
       
     }
